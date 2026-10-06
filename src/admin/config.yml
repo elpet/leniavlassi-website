@@ -208,6 +208,7 @@ collections:
             fields:
               - { name: googleSiteVerification, label: Κωδικός επαλήθευσης Google Search Console, widget: string, required: false, hint: "Από το Search Console → Μέθοδος «Ετικέτα HTML»: μόνο η τιμή content=\"…\"." }
               - { name: bingSiteVerification, label: Κωδικός επαλήθευσης Bing Webmaster Tools, widget: string, required: false }
+              - { name: googleBusinessUrl, label: Link καταχώρισης Google Business (Google Maps), widget: string, required: false, hint: "Google Maps → η καταχώρισή σας → Κοινοποίηση → Αντιγραφή συνδέσμου. Χρησιμοποιείται στο «Οδηγίες στον χάρτη» και συνδέει την καταχώριση με το site για το Google." }
               - name: sameAs
                 label: Επαγγελματικά προφίλ (Google Business, doctoranytime κ.λπ.)
                 hint: Βοηθούν το Google να συνδέσει τα προφίλ σας με την ιστοσελίδα.

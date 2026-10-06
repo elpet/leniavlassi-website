@@ -21,9 +21,14 @@ export default function (eleventyConfig) {
     return "tel:" + (digits.startsWith("+") ? digits : "+30" + digits);
   });
   eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
+  // Σύνδεσμος χάρτη: η καταχώριση Google Business αν έχει οριστεί, αλλιώς αναζήτηση της διεύθυνσης
+  eleventyConfig.addFilter("mapUrl", (settings) =>
+    settings.seo?.googleBusinessUrl ||
+    "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(settings.address)
+  );
   // Markdown από τα αρχεία δεδομένων (π.χ. απαντήσεις FAQ που γράφονται στο /admin/)
   eleventyConfig.addFilter("md", (text) => md.render(String(text || "")));
-  // JSON-LD της τρέχουσας σελίδας· το "<" γίνεται < ώστε να μην κλείνει το <script>
+  // JSON-LD της τρέχουσας σελίδας· κάθε "<" γράφεται ως Unicode escape, ώστε να μην κλείνει το <script>
   eleventyConfig.addShortcode("structuredData", function () {
     const json = JSON.stringify(structuredData(this.ctx, (text) => md.render(String(text || ""))));
     return json.replace(/</g, "\\u003c");

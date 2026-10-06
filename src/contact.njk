@@ -21,7 +21,7 @@ breadcrumb: Επικοινωνία
     <div class="contact-info">
       <p>Επικοινωνήστε μαζί μου για να προγραμματίσουμε την πρώτη μας συνάντηση.</p>
       <ul class="contact-list">
-        <li><strong>Διεύθυνση:</strong> {{ settings.address }}</li>
+        <li><strong>Διεύθυνση:</strong> {{ settings.address }} · <a href="{{ settings | mapUrl }}" target="_blank" rel="noopener" class="text-link">Οδηγίες στον χάρτη</a></li>
         <li><strong>Τηλέφωνο:</strong> <a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a></li>
         <li><strong>Email:</strong> <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></li>
         <li><strong>Ωράριο:</strong> {{ settings.hours }}</li>

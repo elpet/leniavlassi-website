@@ -16,7 +16,7 @@
       </nav>
       <div>
         <p><a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a><br><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>
-        <p>{{ settings.address }}</p>
+        <p>{{ settings.address }}<br><a href="{{ settings | mapUrl }}" target="_blank" rel="noopener">Οδηγίες στον χάρτη</a></p>
         {%- if settings.facebookUrl or settings.instagramUrl %}
         <p class="footer-social">
           {% if settings.facebookUrl %}<a href="{{ settings.facebookUrl }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
