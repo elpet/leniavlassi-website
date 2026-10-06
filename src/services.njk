@@ -17,11 +17,24 @@ breadcrumb: Υπηρεσίες
   <div class="container narrow">
     <p class="areas-intro">{{ areas.intro }}</p>
     <h2>Τομείς που καλύπτω</h2>
-    <ul class="areas-list">
+  </div>
+  <div class="container">
+    <div class="area-cards">
       {%- for area in areas.list %}
-      <li>{{ area }}</li>
+      <a class="area-card" href="/services/{{ area.slug }}/">
+        <span class="area-card-title">{{ area.heading }}</span>
+        <span class="area-card-text">{{ area.summary }}</span>
+        <span class="text-link">Περισσότερα &rarr;</span>
+      </a>
       {%- endfor %}
-    </ul>
+      {%- if settings.practice.onlineSessions %}
+      <a class="area-card area-card-online" href="/online-psychotherapeia/">
+        <span class="area-card-title">Online ψυχοθεραπεία</span>
+        <span class="area-card-text">Συνεδρίες με βιντεοκλήση από οπουδήποτε, στην Ελλάδα ή στο εξωτερικό.</span>
+        <span class="text-link">Περισσότερα &rarr;</span>
+      </a>
+      {%- endif %}
+    </div>
   </div>
 </section>
 

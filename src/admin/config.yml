@@ -134,10 +134,22 @@ collections:
         fields:
           - { name: intro, label: Εισαγωγικό κείμενο (σελίδα Υπηρεσιών), widget: text }
           - name: list
-            label: Τομείς
-            hint: Εμφανίζονται στην αρχική και στις Υπηρεσίες, και δηλώνονται στο Google ως αντικείμενο εξειδίκευσης.
+            label: Τομείς (κάθε τομέας έχει δική του σελίδα /services/…/)
+            label_singular: Τομέας
+            hint: Κάθε σελίδα τομέα βοηθά να σας βρίσκουν στο Google όσοι ψάχνουν το συγκεκριμένο θέμα. Ενημερωτικό ύφος, χωρίς υποσχέσεις αποτελεσμάτων (άρθρα 10-11 Κώδικα Δεοντολογίας).
             widget: list
-            field: { name: area, label: Τομέας, widget: string }
+            summary: "{{heading}}"
+            fields:
+              - { name: heading, label: Τίτλος σελίδας (H1), widget: string }
+              - { name: title, label: Σύντομος τίτλος (λίστες), widget: string }
+              - name: slug
+                label: "Διεύθυνση URL (λατινικά, π.χ. penthos) — μην την αλλάζετε μετά τη δημοσίευση"
+                widget: string
+                pattern: ['^[a-z0-9-]+$', 'Μόνο μικρά λατινικά, αριθμοί και παύλες']
+              - { name: seoTitle, label: "Τίτλος για το Google (π.χ. «Ψυχολόγος για … στον Άλιμο»)", widget: string }
+              - { name: description, label: Περιγραφή για το Google (1-2 προτάσεις), widget: text }
+              - { name: summary, label: Σύντομη περιγραφή (κάρτες), widget: string }
+              - { name: body, label: Κείμενο σελίδας, widget: markdown }
       - name: faq
         label: Συχνές ερωτήσεις
         file: src/_data/faq.json
@@ -218,6 +230,11 @@ collections:
                 fields:
                   - { name: latitude, label: Γεωγραφικό πλάτος, widget: number, value_type: float, required: false }
                   - { name: longitude, label: Γεωγραφικό μήκος, widget: number, value_type: float, required: false }
+              - name: nearbyAreas
+                label: Γειτονικές περιοχές που εξυπηρετούνται
+                hint: Αναφέρονται μία φορά στο κείμενο και δηλώνονται στο Google. Μόνο πραγματικά κοντινές περιοχές — όχι μακριά λίστα.
+                widget: list
+                field: { name: area, label: Περιοχή, widget: string }
               - name: sameAs
                 label: Επαγγελματικά προφίλ (Google Business, doctoranytime κ.λπ.)
                 hint: Βοηθούν το Google να συνδέσει τα προφίλ σας με την ιστοσελίδα.

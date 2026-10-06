@@ -1,0 +1,53 @@
+---js
+{
+  layout: "layouts/base.njk",
+  pagination: { data: "areas.list", size: 1, alias: "area" },
+  permalink: (data) => `/services/${data.area.slug}/`,
+  eleventyComputed: {
+    title: (data) => data.area.seoTitle,
+    // Χωρίς online συνεδρίες, αφαιρείται η αναφορά «online» από την περιγραφή
+    description: (data) => data.settings.practice.onlineSessions
+      ? data.area.description
+      : data.area.description.replace(/ (και|ή) online/g, ""),
+    breadcrumb: (data) => data.area.heading,
+    serviceName: (data) => data.area.heading,
+  },
+}
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow"><a href="/services/">Υπηρεσίες</a> · Ψυχολόγος στον Άλιμο{% if settings.practice.onlineSessions %} &amp; online{% endif %}</p>
+    <h1>{{ area.heading }}</h1>
+    <p class="page-hero-sub">{{ area.summary }}</p>
+  </div>
+</section>
+
+<section class="prose-section">
+  <div class="container narrow">
+    <div class="prose">
+      {{ area.body | md | safe }}
+    </div>
+
+    <div class="area-cta">
+      <div>
+        <p class="area-cta-title">Θέλετε να το συζητήσουμε;</p>
+        <p>Συνεδρίες στο γραφείο στον Άλιμο{% if settings.practice.onlineSessions %} ή <a href="/online-psychotherapeia/">online</a>{% endif %}. Η πρώτη συνάντηση είναι μια γνωριμία, για να δούμε μαζί αν και πώς μπορώ να βοηθήσω.</p>
+      </div>
+      <div class="area-cta-actions">
+        <a href="/rantevou/" class="btn btn-primary">Κλείστε ραντεβού</a>
+        <a href="{{ settings.phone | telHref }}" class="btn btn-secondary">{{ settings.phone }}</a>
+      </div>
+    </div>
+
+    <nav class="area-related" aria-label="Άλλοι τομείς">
+      <p class="eyebrow">Άλλοι τομείς</p>
+      <ul>
+        {%- for other in areas.list %}{% if other.slug != area.slug %}
+        <li><a href="/services/{{ other.slug }}/">{{ other.heading }}</a></li>
+        {%- endif %}{% endfor %}
+      </ul>
+    </nav>
+
+    <p class="post-disclaimer">Οι πληροφορίες έχουν ενημερωτικό χαρακτήρα και δεν υποκαθιστούν την εξατομικευμένη ψυχολογική εκτίμηση. Αν βρίσκεστε σε κρίση, δείτε την <a href="/amesi-voitheia/">άμεση βοήθεια</a>.</p>
+  </div>
+</section>

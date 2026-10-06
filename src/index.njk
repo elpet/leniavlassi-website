@@ -1,12 +1,12 @@
 ---
 layout: layouts/base.njk
-description: Λένια Βλάσση, Ψυχολόγος - Γνωσιακή Συμπεριφορική Θεραπεύτρια στον Άλιμο. Ψυχοθεραπεία ενηλίκων για άγχος, κατάθλιψη, πένθος, θεραπεία ζεύγους και συμβουλευτική γονέων. Κλείστε ραντεβού online.
+description: Λένια Βλάσση, Ψυχολόγος στον Άλιμο και online — Γνωσιακή Συμπεριφορική Θεραπεία για άγχος, κρίσεις πανικού, κατάθλιψη, πένθος, θεραπεία ζεύγους και συμβουλευτική γονέων. Κλείστε ραντεβού online.
 ---
 <section class="hero">
   <img src="/images/branch.svg" alt="" class="hero-branch" aria-hidden="true">
   <div class="container hero-inner">
     <div class="hero-text">
-      <p class="eyebrow">Ψυχοθεραπεία &middot; Αυτογνωσία &middot; Αλλαγή</p>
+      <p class="eyebrow">Ψυχολόγος στον Άλιμο{% if settings.practice.onlineSessions %} &amp; online{% endif %} &middot; Ψυχοθεραπεία</p>
       <h1>Όσα σε δυσκολεύουν, έχουν να διηγηθούν μια&nbsp;ιστορία.</h1>
       <p class="hero-lead">Ένας ασφαλής χώρος για εσένα.</p>
       <p class="hero-sub">Στον Άλιμο &amp; online. Μαζί, με σεβασμό, επιστημονική γνώση και ουσιαστική ανθρώπινη επαφή, θα κατανοήσουμε τι σε δυσκολεύει και θα βρούμε τον δρόμο προς την ισορροπία.</p>
@@ -31,12 +31,16 @@ description: Λένια Βλάσση, Ψυχολόγος - Γνωσιακή Συ
       {%- endif %}{% endfor %}
     </div>
     <div class="areas-home">
-      <p class="eyebrow center">Με τι μπορώ να βοηθήσω</p>
+      <h2 class="center areas-home-title">Με τι μπορώ να βοηθήσω</h2>
       <ul class="areas-list">
         {%- for area in areas.list %}
-        <li>{{ area }}</li>
+        <li><a href="/services/{{ area.slug }}/">{{ area.heading }}</a></li>
         {%- endfor %}
+        {%- if settings.practice.onlineSessions %}
+        <li><a href="/online-psychotherapeia/">Online ψυχοθεραπεία</a></li>
+        {%- endif %}
       </ul>
+      <p class="center areas-nearby">Το γραφείο βρίσκεται στον Άλιμο, κοντά σε {{ settings.seo.nearbyAreas | join(", ") }}{% if settings.practice.onlineSessions %}, ενώ οι online συνεδρίες γίνονται από οπουδήποτε{% endif %}.</p>
     </div>
     <p class="center section-more"><a href="/services/" class="text-link">Όλες οι υπηρεσίες &rarr;</a></p>
   </div>

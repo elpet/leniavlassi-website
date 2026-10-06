@@ -5,11 +5,22 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for item in collections.all %}
-{%- if item.url and not item.data.noindex and not item.url.endsWith(".xml") and not item.url.endsWith(".json") %}
+{%- if item.url and not item.data.noindex and not item.url.endsWith(".xml") and not item.url.endsWith(".json") and not item.url.startsWith("/services/") %}
   <url>
     <loc>{{ site.url }}{{ item.url }}</loc>
     <lastmod>{{ item.date | dateIso }}</lastmod>
   </url>
 {%- endif %}
 {%- endfor %}
+{#- Σελίδες τομέων: το pagination βάζει στις συλλογές μόνο την πρώτη, οπότε δηλώνονται ρητά #}
+{%- for area in areas.list %}
+  <url>
+    <loc>{{ site.url }}/services/{{ area.slug }}/</loc>
+    <lastmod>{{ build.lastUpdated | dateIso }}</lastmod>
+  </url>
+{%- endfor %}
+  <url>
+    <loc>{{ site.url }}/services/</loc>
+    <lastmod>{{ build.lastUpdated | dateIso }}</lastmod>
+  </url>
 </urlset>

@@ -8,6 +8,9 @@
       <nav class="footer-nav" aria-label="Μενού υποσέλιδου">
         <a href="/about/">Σχετικά</a>
         <a href="/services/">Υπηρεσίες</a>
+        {%- if settings.practice.onlineSessions %}
+        <a href="/online-psychotherapeia/">Online ψυχοθεραπεία</a>
+        {%- endif %}
         <a href="/plirofories/">Πρακτικές πληροφορίες</a>
         <a href="/blog/">Blog</a>
         <a href="/faq/">Συχνές Ερωτήσεις</a>
