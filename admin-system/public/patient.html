@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Καρτέλα Ασθενή | Διαχειριστικό</title>
+<link rel="stylesheet" href="/css/admin.css">
+<style>
+  .patient-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 8px; }
+  .patient-meta { color: var(--color-text-soft); font-size: 0.9rem; margin: 4px 0 0; }
+  .summary-bar { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0 28px; }
+  .summary-tile { background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 22px; min-width: 150px; }
+  .summary-tile strong { display: block; font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-primary-dark); }
+  .summary-tile span { font-size: 0.78rem; color: var(--color-text-soft); }
+  .session-card { background: var(--color-surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 22px; margin-bottom: 16px; }
+  .session-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+  .session-date { font-weight: 600; }
+  .session-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge-scale { background: var(--color-bg); border: 1px solid var(--color-border); color: var(--color-text); }
+  .session-field { margin: 6px 0; font-size: 0.9rem; }
+  .session-field strong { color: var(--color-text-soft); font-weight: 600; margin-right: 6px; }
+  .back-link { font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <div class="topbar">
+    <span class="brand">Διαχειριστικό Ιατρείου</span>
+    <nav>
+      <a href="/dashboard.html">Αρχική</a>
+      <a href="/appointments.html">Ραντεβού</a>
+      <a href="/patients.html" class="active">Ασθενείς</a>
+      <a href="/audit.html">Ιστορικό</a>
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn btn-secondary btn-small" data-logout>Αποσύνδεση</button>
+    </nav>
+  </div>
+
+  <div class="page">
+    <a class="back-link" href="/patients.html">&larr; Πίσω στους Ασθενείς</a>
+
+    <div class="patient-header">
+      <div>
+        <h2 id="patientName">—</h2>
+        <p class="patient-meta" id="patientContact"></p>
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-secondary btn-small" id="editInfoBtn">Επεξεργασία Στοιχείων</button>
+        <button class="btn btn-secondary btn-small" id="exportBtn">Εξαγωγή (GDPR)</button>
+        <button class="btn btn-danger btn-small" id="deleteBtn">Διαγραφή Ασθενή</button>
+      </div>
+    </div>
+
+    <div class="summary-bar" id="summaryBar"></div>
+
+    <div class="page-header">
+      <h3>Ιστορικό Συνεδριών</h3>
+      <button class="btn" id="newSessionBtn">+ Νέα Σημείωση Συνεδρίας</button>
+    </div>
+    <div id="sessionsList"></div>
+  </div>
+</div>
+
+<!-- Modal: επεξεργασία βασικών στοιχείων ασθενή -->
+<div class="modal-backdrop" id="infoModal" hidden>
+  <div class="modal">
+    <h3>Στοιχεία Ασθενή</h3>
+    <form id="infoForm">
+      <div class="form-row"><label for="fullName">Ονοματεπώνυμο *</label><input type="text" id="fullName" required></div>
+      <div class="form-row"><label for="phone">Τηλέφωνο</label><input type="tel" id="phone"></div>
+      <div class="form-row"><label for="email">Email</label><input type="email" id="email"></div>
+      <p class="error-text" id="infoError" role="alert"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelInfoBtn">Άκυρο</button>
+        <button type="submit" class="btn">Αποθήκευση</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: τυποποιημένη σημείωση συνεδρίας -->
+<div class="modal-backdrop" id="sessionModal" hidden>
+  <div class="modal">
+    <h3 id="sessionModalTitle">Νέα Σημείωση Συνεδρίας</h3>
+    <form id="sessionForm">
+      <input type="hidden" id="sessionId">
+      <div class="form-row">
+        <label for="startsAt">Ημερομηνία &amp; Ώρα *</label>
+        <input type="datetime-local" id="startsAt" required>
+      </div>
+      <div class="form-row">
+        <label for="status">Κατάσταση</label>
+        <select id="status">
+          <option value="scheduled">Προγραμματισμένο</option>
+          <option value="completed">Ολοκληρώθηκε</option>
+          <option value="cancelled">Ακυρώθηκε</option>
+          <option value="no_show">Μη Προσέλευση</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="topic">Θέμα Συνεδρίας</label>
+        <select id="topic">
+          <option value="">— Επιλέξτε —</option>
+          <option>Άγχος</option>
+          <option>Διάθεση / Κατάθλιψη</option>
+          <option>Σχέσεις</option>
+          <option>Οικογένεια</option>
+          <option>Εργασία / Σπουδές</option>
+          <option>Τραύμα</option>
+          <option>Πένθος</option>
+          <option>Αυτοεκτίμηση</option>
+          <option>Ύπνος</option>
+          <option>Άλλο</option>
+        </select>
+      </div>
+      <div class="grid-2">
+        <div class="form-row">
+          <label for="moodRating">Διάθεση Ασθενή</label>
+          <select id="moodRating">
+            <option value="">—</option>
+            <option value="1">1 — Πολύ Χαμηλή</option>
+            <option value="2">2 — Χαμηλή</option>
+            <option value="3">3 — Μέτρια</option>
+            <option value="4">4 — Καλή</option>
+            <option value="5">5 — Πολύ Καλή</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="progressRating">Αξιολόγηση Προόδου</label>
+          <select id="progressRating">
+            <option value="">—</option>
+            <option value="1">1 — Επιδείνωση</option>
+            <option value="2">2 — Ελαφρά Επιδείνωση</option>
+            <option value="3">3 — Σταθερή</option>
+            <option value="4">4 — Ελαφρά Βελτίωση</option>
+            <option value="5">5 — Σημαντική Βελτίωση</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="notes">Παρατηρήσεις</label>
+        <textarea id="notes" rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="plan">Επόμενα Βήματα / Πλάνο</label>
+        <textarea id="plan" rows="2"></textarea>
+      </div>
+      <span class="note-text">Το θέμα, οι παρατηρήσεις και το πλάνο αποθηκεύονται κρυπτογραφημένα (AES-256).</span>
+      <p class="error-text" id="sessionError" role="alert"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelSessionBtn">Άκυρο</button>
+        <button type="submit" class="btn">Αποθήκευση</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/patient.js"></script>
+</body>
+</html>

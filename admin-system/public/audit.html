@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ιστορικό Πρόσβασης | Διαχειριστικό</title>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="topbar">
+    <span class="brand">Διαχειριστικό Ιατρείου</span>
+    <nav>
+      <a href="/dashboard.html">Αρχική</a>
+      <a href="/appointments.html">Ραντεβού</a>
+      <a href="/patients.html">Ασθενείς</a>
+      <a href="/audit.html" class="active">Ιστορικό</a>
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn btn-secondary btn-small" data-logout>Αποσύνδεση</button>
+    </nav>
+  </div>
+
+  <div class="page">
+    <div class="page-header">
+      <h2>Ιστορικό Πρόσβασης</h2>
+    </div>
+    <p class="note-text">Καταγραφή κάθε πρόσβασης/ενέργειας σε δεδομένα ασθενών, για λόγους λογοδοσίας (τελευταίες 200 εγγραφές).</p>
+    <div id="auditList"></div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/audit.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ραντεβού | Διαχειριστικό</title>
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="topbar">
+    <span class="brand">Διαχειριστικό Ιατρείου</span>
+    <nav>
+      <a href="/dashboard.html">Αρχική</a>
+      <a href="/appointments.html" class="active">Ραντεβού</a>
+      <a href="/patients.html">Ασθενείς</a>
+      <a href="/audit.html">Ιστορικό</a>
+      <span class="user-email" id="userEmail"></span>
+      <button class="btn btn-secondary btn-small" data-logout>Αποσύνδεση</button>
+    </nav>
+  </div>
+
+  <div class="page">
+    <div class="page-header">
+      <h2>Ραντεβού</h2>
+      <button class="btn" id="newApptBtn">+ Νέο Ραντεβού</button>
+    </div>
+    <div id="appointmentsList"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="apptModal" hidden>
+  <div class="modal">
+    <h3 id="modalTitle">Νέο Ραντεβού</h3>
+    <form id="apptForm">
+      <input type="hidden" id="apptId">
+      <div class="form-row">
+        <label for="patientId">Ασθενής *</label>
+        <select id="patientId" required></select>
+      </div>
+      <div class="form-row">
+        <label for="startsAt">Ημερομηνία &amp; Ώρα Έναρξης *</label>
+        <input type="datetime-local" id="startsAt" required>
+      </div>
+      <div class="form-row">
+        <label for="status">Κατάσταση</label>
+        <select id="status">
+          <option value="scheduled">Προγραμματισμένο</option>
+          <option value="completed">Ολοκληρώθηκε</option>
+          <option value="cancelled">Ακυρώθηκε</option>
+          <option value="no_show">Μη Προσέλευση</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="topic">Θέμα Συνεδρίας</label>
+        <select id="topic">
+          <option value="">— Επιλέξτε —</option>
+          <option>Άγχος</option>
+          <option>Διάθεση / Κατάθλιψη</option>
+          <option>Σχέσεις</option>
+          <option>Οικογένεια</option>
+          <option>Εργασία / Σπουδές</option>
+          <option>Τραύμα</option>
+          <option>Πένθος</option>
+          <option>Αυτοεκτίμηση</option>
+          <option>Ύπνος</option>
+          <option>Άλλο</option>
+        </select>
+      </div>
+      <div class="grid-2">
+        <div class="form-row">
+          <label for="moodRating">Διάθεση Ασθενή</label>
+          <select id="moodRating">
+            <option value="">—</option>
+            <option value="1">1 — Πολύ Χαμηλή</option>
+            <option value="2">2 — Χαμηλή</option>
+            <option value="3">3 — Μέτρια</option>
+            <option value="4">4 — Καλή</option>
+            <option value="5">5 — Πολύ Καλή</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="progressRating">Αξιολόγηση Προόδου</label>
+          <select id="progressRating">
+            <option value="">—</option>
+            <option value="1">1 — Επιδείνωση</option>
+            <option value="2">2 — Ελαφρά Επιδείνωση</option>
+            <option value="3">3 — Σταθερή</option>
+            <option value="4">4 — Ελαφρά Βελτίωση</option>
+            <option value="5">5 — Σημαντική Βελτίωση</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <label for="notes">Παρατηρήσεις</label>
+        <textarea id="notes" rows="3"></textarea>
+      </div>
+      <div class="form-row">
+        <label for="plan">Επόμενα Βήματα / Πλάνο</label>
+        <textarea id="plan" rows="2"></textarea>
+      </div>
+      <span class="note-text">Το θέμα, οι παρατηρήσεις και το πλάνο αποθηκεύονται κρυπτογραφημένα (AES-256).</span>
+      <p class="error-text" id="formError" role="alert"></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-secondary" id="cancelModalBtn">Άκυρο</button>
+        <button type="submit" class="btn">Αποθήκευση</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/appointments.js"></script>
+</body>
+</html>
