@@ -1,0 +1,11 @@
+<article class="service-card">
+  <div class="service-icon">{% include "partials/leaf.njk" %}</div>
+  <h3>{{ service.title }}</h3>
+  {%- if service.quote %}
+  <blockquote class="service-quote">
+    <p>«{{ service.quote }}»</p>
+    {%- if service.author %}<cite>— {{ service.author }}</cite>{% endif %}
+  </blockquote>
+  {%- endif %}
+  {%- if service.description %}<p class="service-desc">{{ service.description }}</p>{% endif %}
+</article>

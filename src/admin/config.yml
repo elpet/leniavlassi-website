@@ -84,6 +84,26 @@ collections:
         widget: string
         required: false
 
+  - name: pages
+    label: Περιεχόμενο σελίδων
+    files:
+      - name: services
+        label: Υπηρεσίες
+        file: src/_data/services.json
+        format: json
+        fields:
+          - name: list
+            label: Υπηρεσίες
+            label_singular: Υπηρεσία
+            widget: list
+            summary: "{{title}}"
+            fields:
+              - { name: title, label: Τίτλος, widget: string }
+              - { name: quote, label: Απόφθεγμα (προαιρετικό), widget: text, required: false }
+              - { name: author, label: Συγγραφέας αποφθέγματος, widget: string, required: false }
+              - { name: description, label: Περιγραφή, widget: text, required: false }
+              - { name: home, label: Εμφάνιση στην αρχική σελίδα, widget: boolean, default: false, required: false }
+
   - name: settings
     label: Ρυθμίσεις
     files:
