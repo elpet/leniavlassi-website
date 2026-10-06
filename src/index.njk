@@ -1,0 +1,90 @@
+---
+layout: layouts/base.njk
+---
+{%- set leaf = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M12 3C7 5 4 9 4 14c0 3.5 2.5 6 6 6.5"/><path d="M12 3c5 2 8 6 8 11 0 3.5-2.5 6-6 6.5"/><path d="M12 3v17.5"/></svg>' -%}
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">Ψυχολόγος &middot; Γνωσιακή Συμπεριφορική Θεραπεύτρια</p>
+      <h1>Όσα σε δυσκολεύουν, <br> έχουν να διηγηθούν μια ιστορία</h1>
+      <p class="hero-sub">Ένας ασφαλής χώρος για εσένα — στον Άλιμο &amp; online. Μαζί, με σεβασμό, επιστημονική γνώση και ουσιαστική ανθρώπινη επαφή, θα κατανοήσουμε τι σε δυσκολεύει και θα βρούμε τον δρόμο προς την ισορροπία.</p>
+      <div class="hero-actions">
+        <a href="/contact/" class="btn btn-primary">Κλείστε Ραντεβού</a>
+        <a href="/services/" class="btn btn-secondary">Δείτε τις Υπηρεσίες</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><strong>ΕΚΠΑ</strong><span>πτυχίο Ψυχολογίας</span></div>
+        <div class="trust-item"><strong>CBT</strong><span>γνωσιακή-συμπεριφορική εξειδίκευση</span></div>
+        <div class="trust-item"><strong>100%</strong><span>εχεμύθεια</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-blob">
+        <img src="/images/office-sofa.jpg" alt="Ο χώρος θεραπείας της Λένιας Βλάσση στον Άλιμο">
+      </div>
+      <div class="hero-card">
+        <p>&ldquo;Όσα σε δυσκολεύουν, έχουν να διηγηθούν μια ιστορία.&rdquo;</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about about-teaser">
+  <div class="container about-inner">
+    <div class="about-photo">
+      <div class="photo-frame">
+        <img src="/images/office-desk.jpg" alt="Ο χώρος συνεδριών της Λένιας Βλάσση">
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="eyebrow">Σχετικά με εμένα</p>
+      <h2>Λένια Βλάσση</h2>
+      <p>Η αγάπη μου για την ψυχολογία ξεκίνησε αρκετά νωρίς στη ζωή μου, τόσο μέσα από προσωπικά βιώματα όσο και κοινωνικά ερεθίσματα. Πιστεύω πως κάθε άνθρωπος έχει τους δικούς του ρυθμούς και τη δική του ιστορία — ο ρόλος μου είναι να περπατήσω δίπλα σας, με σεβασμό, επιστημονική γνώση και ενσυναίσθηση.</p>
+      <p>Από το 2020 παρακολουθώ περιστατικά ιδιωτικά, ενώ από τις αρχές του 2022 λειτουργεί ο δικός μου χώρος θεραπείας &amp; συμβουλευτικής στον Άλιμο.</p>
+      <a href="/about/" class="text-link">Διαβάστε περισσότερα για μένα &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="container">
+    <p class="eyebrow center">Πώς μπορώ να βοηθήσω</p>
+    <h2 class="center">Υπηρεσίες</h2>
+    <div class="services-grid">
+      <article class="service-card">
+        <div class="service-icon">{{ leaf | safe }}</div>
+        <h3>Ατομική Θεραπεία Ενηλίκων</h3>
+        <p>Συνεδρίες για άγχος, κατάθλιψη, τραύμα, αυτοεκτίμηση και προσωπική ανάπτυξη.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">{{ leaf | safe }}</div>
+        <h3>Θεραπεία Ζεύγους</h3>
+        <p>Δουλειά στην επικοινωνία και τη σχέση σας, με σεβασμό στις ανάγκες και των δύο.</p>
+      </article>
+      <article class="service-card">
+        <div class="service-icon">{{ leaf | safe }}</div>
+        <h3>Γνωσιακή - Συμπεριφορική Θεραπεία</h3>
+        <p>Επιστημονικά τεκμηριωμένες τεχνικές για αγχώδεις διαταραχές, ΙΨΔ και μετατραυματικό στρες.</p>
+      </article>
+    </div>
+    <p class="center section-more"><a href="/services/" class="btn btn-secondary">Όλες οι υπηρεσίες</a></p>
+  </div>
+</section>
+
+{%- if collections.posts.length %}
+<section class="latest-posts">
+  <div class="container">
+    <p class="eyebrow center">Από το blog</p>
+    <h2 class="center">Πρόσφατα Άρθρα</h2>
+    <div class="posts-grid">
+      {%- for post in collections.posts | limit(3) %}
+      {% include "partials/post-card.njk" %}
+      {%- endfor %}
+    </div>
+    <p class="center section-more"><a href="/blog/" class="btn btn-secondary">Όλα τα άρθρα</a></p>
+  </div>
+</section>
+{%- endif %}
+
+{% include "partials/cta.njk" %}

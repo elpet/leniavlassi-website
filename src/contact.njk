@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+title: Επικοινωνία & Ραντεβού
+description: Κλείστε ραντεβού με τη Λένια Βλάσση, Ψυχολόγο στον Άλιμο (Λεωφ. Καλαμακίου 3) ή online. Τηλέφωνο 216 002 4060.
+permalink: /contact/
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Επικοινωνία</p>
+    <h1>Κλείστε το Ραντεβού σας</h1>
+    <p class="page-hero-sub">Απαντάω σε όλα τα μηνύματα εντός 24 ωρών.</p>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="container contact-inner">
+    <div class="contact-info">
+      <p>Επικοινωνήστε μαζί μου για να προγραμματίσουμε την πρώτη μας συνάντηση.</p>
+      <ul class="contact-list">
+        <li><strong>Διεύθυνση:</strong> {{ site.address }}</li>
+        <li><strong>Τηλέφωνο:</strong> <a href="{{ site.phoneHref }}">{{ site.phone }}</a></li>
+        <li><strong>Email:</strong> <a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        <li><strong>Ωράριο:</strong> Δευ 10:00-14:00 &amp; 18:00-21:00 · Τρί 18:00-21:00 · Τετ-Παρ 10:00-20:00 · Σαβ-Κυρ κλειστά</li>
+        <li><strong>Ραντεβού:</strong> μέσω <a href="https://www.leniavlassi.com/" target="_blank" rel="noopener">leniavlassi.com</a>, <a href="https://www.doctoranytime.gr/en/d/psychologist-psychotherapist/vlassi-eleni-2" target="_blank" rel="noopener">doctoranytime.gr</a> ή της φόρμας</li>
+      </ul>
+    </div>
+    <form class="contact-form" id="contactForm" novalidate>
+      <div class="form-row">
+        <label for="name">Ονοματεπώνυμο</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-row">
+        <label for="phone">Τηλέφωνο</label>
+        <input type="tel" id="phone" name="phone">
+      </div>
+      <div class="form-row">
+        <label for="message">Μήνυμα</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Αποστολή Αιτήματος</button>
+      <p class="form-note" id="formNote" role="status"></p>
+    </form>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <p class="eyebrow center">Βρείτε με &amp; στο</p>
+    <h2 class="center">Επαληθευμένο Επαγγελματικό Προφίλ</h2>
+    {% include "partials/platforms.njk" %}
+  </div>
+</section>

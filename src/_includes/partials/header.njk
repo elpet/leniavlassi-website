@@ -1,0 +1,22 @@
+{%- set navItems = [
+  { url: "/", label: "Αρχική" },
+  { url: "/about/", label: "Σχετικά" },
+  { url: "/services/", label: "Υπηρεσίες" },
+  { url: "/blog/", label: "Blog" },
+  { url: "/faq/", label: "Συχνές Ερωτήσεις" }
+] -%}
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <a href="/" class="logo">Λένια <span>Βλάσση</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Άνοιγμα μενού" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      {%- for item in navItems %}
+      {%- set active = (page.url == item.url) or (item.url != "/" and page.url and page.url.startsWith(item.url)) %}
+      <a href="{{ item.url }}"{% if active %} class="active" aria-current="page"{% endif %}>{{ item.label }}</a>
+      {%- endfor %}
+      <a href="/contact/" class="nav-cta">Ραντεβού</a>
+    </nav>
+  </div>
+</header>

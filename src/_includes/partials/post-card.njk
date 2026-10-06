@@ -1,0 +1,11 @@
+<article class="post-card">
+  <a href="{{ post.url }}" class="post-card-image">
+    <img src="{{ post.data.image or site.defaultImage }}" alt="{{ post.data.imageAlt or post.data.title }}" loading="lazy">
+  </a>
+  <div class="post-card-body">
+    <p class="post-meta"><time datetime="{{ post.date | dateIso }}">{{ post.date | dateGr }}</time>{% if post.data.category %} · {{ post.data.category }}{% endif %}</p>
+    <h3><a href="{{ post.url }}">{{ post.data.title }}</a></h3>
+    <p>{{ post.data.description }}</p>
+    <a href="{{ post.url }}" class="text-link">Διαβάστε το άρθρο &rarr;</a>
+  </div>
+</article>

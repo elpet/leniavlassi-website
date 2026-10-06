@@ -1,0 +1,45 @@
+{%- set pageTitle = (title + " | " + site.name) if title else site.title -%}
+{%- set pageDescription = description or site.description -%}
+{%- set pageUrl = site.url + page.url -%}
+{%- set pageImage = site.url + (image or site.defaultImage) -%}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ pageDescription }}">
+<link rel="canonical" href="{{ pageUrl }}">
+
+<!-- Open Graph: η προεπισκόπηση που εμφανίζεται σε Facebook, LinkedIn, Viber, WhatsApp -->
+<meta property="og:type" content="{{ 'article' if ogType == 'article' else 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:locale" content="{{ site.locale }}">
+<meta property="og:title" content="{{ title or site.title }}">
+<meta property="og:description" content="{{ pageDescription }}">
+<meta property="og:url" content="{{ pageUrl }}">
+<meta property="og:image" content="{{ pageImage }}">
+{%- if ogType == 'article' %}
+<meta property="article:published_time" content="{{ date | dateIso }}">
+{%- endif %}
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="alternate" type="application/rss+xml" title="{{ site.name }} — Blog" href="/blog/feed.xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+{% include "partials/header.njk" %}
+
+<main>
+{{ content | safe }}
+</main>
+
+{% include "partials/footer.njk" %}
+
+<script src="/assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+import { HtmlBasePlugin } from "@11ty/eleventy";
+
+export default function (eleventyConfig) {
+  // Τα links γράφονται ως "/blog/" κ.λπ. — το plugin προσθέτει αυτόματα το pathPrefix
+  // (π.χ. /leniavlassi-website/ στο GitHub Pages).
+  eleventyConfig.addPlugin(HtmlBasePlugin);
+
+  eleventyConfig.addPassthroughCopy("src/assets");
+  eleventyConfig.addPassthroughCopy("src/images");
+
+  eleventyConfig.addCollection("posts", (collectionApi) =>
+    collectionApi
+      .getFilteredByGlob("src/blog/posts/*.md")
+      .sort((a, b) => b.date - a.date)
+  );
+
+  const months = [
+    "Ιανουαρίου", "Φεβρουαρίου", "Μαρτίου", "Απριλίου", "Μαΐου", "Ιουνίου",
+    "Ιουλίου", "Αυγούστου", "Σεπτεμβρίου", "Οκτωβρίου", "Νοεμβρίου", "Δεκεμβρίου",
+  ];
+  eleventyConfig.addFilter("dateGr", (date) => {
+    const d = new Date(date);
+    return `${d.getUTCDate()} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  });
+  eleventyConfig.addFilter("dateIso", (date) => new Date(date).toISOString().slice(0, 10));
+
+  // Εκτιμώμενος χρόνος ανάγνωσης (~200 λέξεις/λεπτό)
+  eleventyConfig.addFilter("readingTime", (content) => {
+    const words = String(content).replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.round(words / 200));
+  });
+
+  eleventyConfig.addFilter("limit", (arr, n) => arr.slice(0, n));
+
+  return {
+    dir: { input: "src", output: "_site", includes: "_includes", data: "_data" },
+    pathPrefix: process.env.PATH_PREFIX || "/",
+    markdownTemplateEngine: "njk",
+    htmlTemplateEngine: "njk",
+  };
+}

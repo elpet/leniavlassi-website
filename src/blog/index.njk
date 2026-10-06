@@ -1,0 +1,42 @@
+---
+layout: layouts/base.njk
+title: Blog
+description: Άρθρα της Λένιας Βλάσση για το άγχος, τις σχέσεις, την αυτοεκτίμηση και την ψυχική υγεία.
+pagination:
+  data: collections.posts
+  size: 9
+  alias: posts
+  generatePageOnEmptyData: true
+permalink: "/blog/{% if pagination.pageNumber > 0 %}page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Blog</p>
+    <h1>Σκέψεις &amp; Άρθρα</h1>
+    <p class="page-hero-sub">Για το άγχος, τις σχέσεις, την αυτοεκτίμηση και όσα μας απασχολούν.</p>
+  </div>
+</section>
+
+<section class="blog-list">
+  <div class="container">
+    {%- if posts.length %}
+    <div class="posts-grid">
+      {%- for post in posts %}
+      {% include "partials/post-card.njk" %}
+      {%- endfor %}
+    </div>
+
+    {%- if pagination.pages.length > 1 %}
+    <nav class="pagination" aria-label="Σελίδες">
+      {% if pagination.href.previous %}<a href="{{ pagination.href.previous }}" class="btn btn-secondary">&larr; Νεότερα</a>{% endif %}
+      <span>Σελίδα {{ pagination.pageNumber + 1 }} από {{ pagination.pages.length }}</span>
+      {% if pagination.href.next %}<a href="{{ pagination.href.next }}" class="btn btn-secondary">Παλαιότερα &rarr;</a>{% endif %}
+    </nav>
+    {%- endif %}
+    {%- else %}
+    <p class="center empty-state">Σύντομα κοντά σας τα πρώτα άρθρα.</p>
+    {%- endif %}
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}

@@ -1,0 +1,72 @@
+---
+layout: layouts/base.njk
+---
+{%- set postUrl = site.url + page.url -%}
+<article class="post">
+  <header class="post-header">
+    <div class="container narrow">
+      <a href="/blog/" class="text-link back-link">&larr; Όλα τα άρθρα</a>
+      <p class="post-meta">
+        <time datetime="{{ page.date | dateIso }}">{{ page.date | dateGr }}</time>
+        {% if category %} · {{ category }}{% endif %}
+        · {{ content | readingTime }}′ ανάγνωση
+        {% if draft %} · <strong class="draft-badge">ΠΡΟΧΕΙΡΟ</strong>{% endif %}
+      </p>
+      <h1>{{ title }}</h1>
+      {% if description %}<p class="post-lead">{{ description }}</p>{% endif %}
+    </div>
+  </header>
+
+  {% if image %}
+  <div class="container narrow">
+    <figure class="post-cover">
+      <img src="{{ image }}" alt="{{ imageAlt or title }}">
+    </figure>
+  </div>
+  {% endif %}
+
+  <div class="container narrow">
+    <div class="post-content">
+      {{ content | safe }}
+    </div>
+
+    <aside class="share" aria-label="Κοινοποίηση άρθρου">
+      <p class="share-title">Μοιραστείτε το άρθρο</p>
+      <div class="share-buttons">
+        <a class="share-btn share-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ postUrl | urlencode }}" target="_blank" rel="noopener">Facebook</a>
+        <a class="share-btn share-linkedin" href="https://www.linkedin.com/sharing/share-offsite/?url={{ postUrl | urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="share-btn share-whatsapp" href="https://wa.me/?text={{ (title + ' ' + postUrl) | urlencode }}" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="share-btn share-viber" href="viber://forward?text={{ (title + ' ' + postUrl) | urlencode }}">Viber</a>
+        <a class="share-btn share-x" href="https://twitter.com/intent/tweet?url={{ postUrl | urlencode }}&text={{ title | urlencode }}" target="_blank" rel="noopener">X</a>
+        <a class="share-btn share-email" href="mailto:?subject={{ title | urlencode }}&body={{ postUrl | urlencode }}">Email</a>
+        <button type="button" class="share-btn share-copy" data-url="{{ postUrl }}">Αντιγραφή link</button>
+        <button type="button" class="share-btn share-native" data-url="{{ postUrl }}" data-title="{{ title }}" hidden>Κοινοποίηση…</button>
+      </div>
+    </aside>
+
+    <div class="author-box">
+      <img src="/images/office-desk.jpg" alt="" class="author-img">
+      <div>
+        <p class="author-name">Λένια Βλάσση</p>
+        <p>Ψυχολόγος · Γνωσιακή Συμπεριφορική Θεραπεύτρια, στον Άλιμο &amp; online. <a href="/about/" class="text-link">Περισσότερα</a></p>
+      </div>
+    </div>
+
+    <p class="post-disclaimer">Τα άρθρα έχουν ενημερωτικό χαρακτήρα και δεν υποκαθιστούν την εξατομικευμένη ψυχολογική υποστήριξη.</p>
+
+    {%- set others = [] -%}
+    {%- for p in collections.posts -%}{%- if p.url != page.url and others.length < 2 -%}{%- set others = (others.push(p), others) -%}{%- endif -%}{%- endfor -%}
+    {%- if others.length %}
+    <section class="more-posts">
+      <h2>Διαβάστε επίσης</h2>
+      <div class="posts-grid two">
+        {%- for post in others %}
+        {% include "partials/post-card.njk" %}
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+  </div>
+</article>
+
+{% include "partials/cta.njk" %}

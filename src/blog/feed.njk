@@ -1,0 +1,23 @@
+---
+permalink: /blog/feed.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>{{ site.name }} — Blog</title>
+  <link>{{ site.url }}/blog/</link>
+  <atom:link href="{{ site.url }}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+  <description>Άρθρα για την ψυχική υγεία από τη Λένια Βλάσση</description>
+  <language>el</language>
+  {%- for post in collections.posts | limit(20) %}
+  <item>
+    <title>{{ post.data.title | escape }}</title>
+    <link>{{ site.url }}{{ post.url }}</link>
+    <guid>{{ site.url }}{{ post.url }}</guid>
+    <pubDate>{{ post.date.toUTCString() }}</pubDate>
+    <description>{{ post.data.description | escape }}</description>
+  </item>
+  {%- endfor %}
+</channel>
+</rss>

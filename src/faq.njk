@@ -1,0 +1,37 @@
+---
+layout: layouts/base.njk
+title: Συχνές Ερωτήσεις
+description: Διάρκεια συνεδρίας, εχεμύθεια, online συνεδρίες και πώς να κλείσετε ραντεβού με τη Λένια Βλάσση.
+permalink: /faq/
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Συχνές Ερωτήσεις</p>
+    <h1>Χρήσιμες Πληροφορίες</h1>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="container faq-inner">
+    <div class="accordion" id="accordion">
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">Πόσο διαρκεί μια συνεδρία;<span class="accordion-icon">+</span></button>
+        <div class="accordion-panel"><p>Κάθε συνεδρία διαρκεί περίπου 45-50 λεπτά. Η πρώτη συνάντηση μπορεί να διαρκέσει λίγο περισσότερο.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">Τηρείται απόλυτη εχεμύθεια;<span class="accordion-icon">+</span></button>
+        <div class="accordion-panel"><p>Ναι. Ο επαγγελματικός απόρρητος τηρείται σύμφωνα με τον ιατρικό κώδικα δεοντολογίας.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">Γίνονται online συνεδρίες;<span class="accordion-icon">+</span></button>
+        <div class="accordion-panel"><p>Ναι, μέσω ασφαλούς πλατφόρμας βιντεοκλήσης, για όσους δεν μπορούν να παρευρεθούν στο ιατρείο.</p></div>
+      </div>
+      <div class="accordion-item">
+        <button class="accordion-trigger" aria-expanded="false">Πώς μπορώ να κλείσω ραντεβού;<span class="accordion-icon">+</span></button>
+        <div class="accordion-panel"><p>Συμπληρώστε τη <a href="/contact/" class="text-link">φόρμα επικοινωνίας</a> ή καλέστε στο <a href="{{ site.phoneHref }}" class="text-link">{{ site.phone }}</a>.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "partials/cta.njk" %}
