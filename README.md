@@ -58,6 +58,7 @@ npm run build    # παραγωγή στο _site/
 
 Δεν χρειάζεται καμία αλλαγή στον κώδικα:
 
+0. Στο `booking-backend/Code.gs` (στο script.google.com) αλλάξτε το `CONFIG_URL` στο νέο domain και κάντε νέα έκδοση.
 1. **Repo variables**: Settings → Secrets and variables → Actions → **Variables**:
    - `SITE_URL` = `https://leniavlassi.gr` (το τελικό domain, χωρίς `/` στο τέλος)
    - `PATH_PREFIX` = `/`
@@ -69,6 +70,12 @@ npm run build    # παραγωγή στο _site/
 
 > Αν το domain φιλοξενεί σήμερα άλλη ιστοσελίδα (π.χ. το leniavlassi.com), η αλλαγή DNS την αντικαθιστά.
 > Τότε αφαιρέστε και την κάρτα «Επίσημη Ιστοσελίδα — leniavlassi.com» από το `src/_includes/partials/platforms.njk`.
+
+## Κρατήσεις ραντεβού (`/rantevou/`)
+
+Online κράτηση σε 3 βήματα: υπηρεσία → ημέρα & ώρα → στοιχεία. Είναι στο design του site και συνδέεται με το Google Calendar μέσω Google Apps Script (`booking-backend/`). Ωράριο, υπηρεσίες και αργίες ρυθμίζονται από το `/admin/`.
+
+Εγκατάσταση: **[booking-backend/README.md](booking-backend/README.md)**. Μέχρι να γίνει, η σελίδα δείχνει το Google Appointment Schedule (αν οριστεί `googleBookingUrl`) ή παραπέμπει στη φόρμα επικοινωνίας.
 
 ## Διαχειριστικό σύστημα (`admin-system/`)
 

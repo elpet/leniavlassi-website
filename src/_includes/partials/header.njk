@@ -16,7 +16,7 @@
       {%- set active = (page.url == item.url) or (item.url != "/" and page.url and page.url.startsWith(item.url)) %}
       <a href="{{ item.url }}"{% if active %} class="active" aria-current="page"{% endif %}>{{ item.label }}</a>
       {%- endfor %}
-      <a href="/contact/" class="nav-cta">Ραντεβού</a>
+      <a href="/rantevou/" class="nav-cta{% if page.url and page.url.startsWith('/rantevou/') %} active{% endif %}">Ραντεβού</a>
     </nav>
   </div>
 </header>

@@ -21,13 +21,13 @@ permalink: /contact/
         <li><strong>Τηλέφωνο:</strong> <a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a></li>
         <li><strong>Email:</strong> <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></li>
         <li><strong>Ωράριο:</strong> {{ settings.hours }}</li>
-        <li><strong>Ραντεβού:</strong> μέσω <a href="https://www.leniavlassi.com/" target="_blank" rel="noopener">leniavlassi.com</a>, <a href="https://www.doctoranytime.gr/en/d/psychologist-psychotherapist/vlassi-eleni-2" target="_blank" rel="noopener">doctoranytime.gr</a> ή της φόρμας</li>
+        <li><strong>Ραντεβού:</strong> <a href="/rantevou/" class="text-link">κλείστε online ημέρα &amp; ώρα</a> ή μέσω <a href="https://www.doctoranytime.gr/en/d/psychologist-psychotherapist/vlassi-eleni-2" target="_blank" rel="noopener">doctoranytime.gr</a></li>
       </ul>
     </div>
     <form class="contact-form" id="contactForm" novalidate
           action="https://api.web3forms.com/submit" method="POST"
           data-key="{{ settings.web3formsKey }}" data-fallback-email="{{ settings.email }}">
-      <input type="hidden" name="subject" value="Νέο αίτημα ραντεβού από την ιστοσελίδα">
+      <input type="hidden" name="subject" value="Νέο μήνυμα από την ιστοσελίδα">
       <input type="hidden" name="from_name" value="Ιστοσελίδα Λένια Βλάσση">
       <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="form-row">

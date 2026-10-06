@@ -1,0 +1,142 @@
+---
+layout: layouts/base.njk
+title: Κλείστε Ραντεβού
+description: Κλείστε online ραντεβού με τη Λένια Βλάσση, Ψυχολόγο στον Άλιμο ή online — επιλέξτε υπηρεσία, ημέρα και ώρα.
+permalink: /rantevou/
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Online κράτηση</p>
+    <h1>Κλείστε το ραντεβού σας</h1>
+    <p class="page-hero-sub">Επιλέξτε υπηρεσία, ημέρα και ώρα που σας εξυπηρετεί. Θα λάβετε αμέσως email επιβεβαίωσης.</p>
+  </div>
+</section>
+
+<section class="booking-section">
+  <div class="container">
+  {%- if booking.appsScriptUrl %}
+    <div class="booking" id="booking" data-endpoint="{{ booking.appsScriptUrl }}">
+
+      <ol class="booking-steps" aria-label="Βήματα κράτησης">
+        <li class="is-active" data-step-indicator="1"><span>1</span> Υπηρεσία</li>
+        <li data-step-indicator="2"><span>2</span> Ημέρα &amp; ώρα</li>
+        <li data-step-indicator="3"><span>3</span> Στοιχεία</li>
+      </ol>
+
+      {# Βήμα 1: Υπηρεσία #}
+      <div class="booking-panel" data-step="1">
+        <h2 class="booking-title">Τι είδους συνεδρία θέλετε;</h2>
+        <div class="booking-services">
+          {%- for service in booking.services %}
+          <button type="button" class="booking-service" data-service="{{ service.id }}" data-name="{{ service.name }}"
+                  data-duration="{{ service.duration }}" data-modes="{{ service.modes | join(',') }}">
+            <span class="booking-service-name">{{ service.name }}</span>
+            <span class="booking-service-meta">{{ service.duration }} λεπτά ·
+              {%- for mode in service.modes %} {{ "Δια ζώσης" if mode == "inperson" else "Online" }}{% if not loop.last %} ή{% endif %}{% endfor %}
+            </span>
+            <span class="booking-service-desc">{{ service.description }}</span>
+          </button>
+          {%- endfor %}
+        </div>
+      </div>
+
+      {# Βήμα 2: Ημέρα & ώρα #}
+      <div class="booking-panel" data-step="2" hidden>
+        <button type="button" class="booking-back" data-go="1">&larr; Αλλαγή υπηρεσίας</button>
+        <h2 class="booking-title">Επιλέξτε ημέρα &amp; ώρα <span class="booking-chosen" data-chosen-service></span></h2>
+        <div class="booking-loading" data-loading>Αναζήτηση διαθέσιμων ωρών…</div>
+        <div class="booking-picker" data-picker hidden>
+          <div class="booking-calendar">
+            <div class="cal-header">
+              <button type="button" class="cal-nav" data-cal-prev aria-label="Προηγούμενος μήνας">&lsaquo;</button>
+              <p class="cal-month" data-cal-month aria-live="polite"></p>
+              <button type="button" class="cal-nav" data-cal-next aria-label="Επόμενος μήνας">&rsaquo;</button>
+            </div>
+            <div class="cal-weekdays" aria-hidden="true"><span>Δε</span><span>Τρ</span><span>Τε</span><span>Πε</span><span>Πα</span><span>Σα</span><span>Κυ</span></div>
+            <div class="cal-grid" data-cal-grid></div>
+          </div>
+          <div class="booking-times">
+            <p class="booking-times-title" data-times-title>Επιλέξτε ημέρα</p>
+            <div class="booking-times-grid" data-times></div>
+            <p class="booking-tz">Ώρα Ελλάδας</p>
+          </div>
+        </div>
+        <p class="booking-empty" data-empty hidden>Δεν υπάρχουν διαθέσιμες ώρες αυτή την περίοδο. Καλέστε στο <a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a> και θα βρούμε μαζί μια λύση.</p>
+      </div>
+
+      {# Βήμα 3: Στοιχεία #}
+      <div class="booking-panel" data-step="3" hidden>
+        <button type="button" class="booking-back" data-go="2">&larr; Αλλαγή ώρας</button>
+        <div class="booking-form-wrap">
+          <aside class="booking-summary">
+            <p class="eyebrow">Το ραντεβού σας</p>
+            <p class="booking-summary-service" data-summary-service></p>
+            <p class="booking-summary-when" data-summary-when></p>
+            <p class="booking-summary-duration" data-summary-duration></p>
+          </aside>
+          <form class="booking-form contact-form" data-form novalidate>
+            <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="form-row" data-mode-row>
+              <span class="form-label">Τρόπος συνεδρίας</span>
+              <div class="mode-options">
+                <label class="mode-option"><input type="radio" name="mode" value="inperson" checked> <span>Δια ζώσης στον Άλιμο</span></label>
+                <label class="mode-option"><input type="radio" name="mode" value="online"> <span>Online (βιντεοκλήση)</span></label>
+              </div>
+            </div>
+            <div class="form-row">
+              <label for="b-name">Ονοματεπώνυμο</label>
+              <input type="text" id="b-name" name="name" required autocomplete="name">
+            </div>
+            <div class="form-row">
+              <label for="b-email">Email</label>
+              <input type="email" id="b-email" name="email" required autocomplete="email">
+            </div>
+            <div class="form-row">
+              <label for="b-phone">Τηλέφωνο</label>
+              <input type="tel" id="b-phone" name="phone" required autocomplete="tel">
+            </div>
+            <div class="form-row">
+              <label for="b-message">Σημείωση (προαιρετικό)</label>
+              <textarea id="b-message" name="message" rows="3"></textarea>
+              <small class="form-hint">Παρακαλώ μη συμπεριλάβετε λεπτομέρειες για την υγεία σας — θα τα συζητήσουμε με ασφάλεια στη συνεδρία.</small>
+            </div>
+            <label class="form-consent">
+              <input type="checkbox" name="consent" required>
+              <span>Συναινώ να χρησιμοποιηθούν τα στοιχεία μου αποκλειστικά για τη διαχείριση του ραντεβού μου.</span>
+            </label>
+            <button type="submit" class="btn btn-primary" data-submit>Επιβεβαίωση ραντεβού</button>
+            <p class="form-note" data-form-note role="status"></p>
+          </form>
+        </div>
+      </div>
+
+      {# Βήμα 4: Επιβεβαίωση #}
+      <div class="booking-panel booking-done" data-step="4" hidden>
+        <div class="booking-done-icon" aria-hidden="true">&#10003;</div>
+        <h2>Το ραντεβού σας κλείστηκε!</h2>
+        <p class="booking-done-when" data-done-when></p>
+        <p>Σας στείλαμε email επιβεβαίωσης με όλες τις λεπτομέρειες. Αν δεν το βλέπετε, ελέγξτε και τα «Ανεπιθύμητα».</p>
+        <a href="/" class="btn btn-secondary">Επιστροφή στην αρχική</a>
+      </div>
+    </div>
+  {%- elif booking.googleBookingUrl %}
+    <div class="booking booking-embed">
+      <iframe src="{{ booking.googleBookingUrl }}" title="Κράτηση ραντεβού" loading="lazy"></iframe>
+    </div>
+  {%- else %}
+    <div class="booking booking-fallback">
+      <h2>Κλείστε ραντεβού τηλεφωνικά ή με μήνυμα</h2>
+      <p>Καλέστε στο <a href="{{ settings.phone | telHref }}" class="text-link">{{ settings.phone }}</a> ή στείλτε μου μήνυμα και θα επικοινωνήσω μαζί σας εντός 24 ωρών.</p>
+      <a href="/contact/" class="btn btn-primary">Φόρμα επικοινωνίας</a>
+    </div>
+  {%- endif %}
+
+    <div class="booking-info">
+      <div><strong>Διεύθυνση</strong><span>{{ settings.address }}</span></div>
+      <div><strong>Τηλέφωνο</strong><span><a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a></span></div>
+      <div><strong>Ακυρώσεις</strong><span>Έως {{ booking.cancelNoticeHours }} ώρες πριν, από τον σύνδεσμο στο email επιβεβαίωσης.</span></div>
+    </div>
+  </div>
+</section>
+
+<script src="/assets/js/booking.js" defer></script>

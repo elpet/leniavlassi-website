@@ -103,3 +103,59 @@ collections:
             hint: Από το web3forms.com. Αν μείνει κενό, η φόρμα ανοίγει το email του επισκέπτη.
             widget: string
             required: false
+
+      - name: booking
+        label: Κρατήσεις ραντεβού
+        file: src/_data/booking.json
+        format: json
+        fields:
+          - name: services
+            label: Υπηρεσίες
+            widget: list
+            summary: "{{name}} ({{duration}}′)"
+            fields:
+              - { name: id, label: Κωδικός (λατινικά, χωρίς κενά — μην τον αλλάζετε μετά), widget: string, pattern: ['^[a-z0-9-]+$', 'Μόνο μικρά λατινικά, αριθμοί και παύλες'] }
+              - { name: name, label: Όνομα, widget: string }
+              - { name: duration, label: Διάρκεια (λεπτά), widget: number, value_type: int, min: 15, max: 240 }
+              - { name: description, label: Περιγραφή, widget: text, required: false }
+              - name: modes
+                label: Τρόπος
+                widget: select
+                multiple: true
+                options:
+                  - { label: Δια ζώσης, value: inperson }
+                  - { label: Online, value: online }
+          - name: weeklyHours
+            label: Εβδομαδιαίο ωράριο ραντεβού
+            hint: Διαστήματα της μορφής 10:00-14:00. Κενή μέρα = κλειστά.
+            widget: object
+            fields:
+              - { name: mon, label: Δευτέρα, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+              - { name: tue, label: Τρίτη, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+              - { name: wed, label: Τετάρτη, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+              - { name: thu, label: Πέμπτη, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+              - { name: fri, label: Παρασκευή, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+              - { name: sat, label: Σάββατο, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+              - { name: sun, label: Κυριακή, widget: list, field: { name: range, label: Διάστημα, widget: string }, required: false }
+          - name: blockedDates
+            label: Κλειστές ημέρες (αργίες, άδειες)
+            hint: Εναλλακτικά, ένα ολοήμερο γεγονός στο Google Calendar κλείνει επίσης τη μέρα.
+            widget: list
+            required: false
+            field: { name: date, label: Ημερομηνία, widget: datetime, format: YYYY-MM-DD, date_format: DD/MM/YYYY, time_format: false }
+          - { name: slotInterval, label: Νέο ραντεβού κάθε (λεπτά), widget: number, value_type: int }
+          - { name: bufferMinutes, label: Κενό ανάμεσα σε ραντεβού (λεπτά), widget: number, value_type: int }
+          - { name: minNoticeHours, label: Ελάχιστη προειδοποίηση (ώρες), widget: number, value_type: int }
+          - { name: maxDaysAhead, label: Κρατήσεις έως πόσες μέρες μπροστά, widget: number, value_type: int }
+          - { name: cancelNoticeHours, label: Online ακύρωση έως (ώρες πριν), widget: number, value_type: int }
+          - name: appsScriptUrl
+            label: Διεύθυνση Google Apps Script (Web app URL)
+            hint: Από την εγκατάσταση του booking-backend. Κενό = εμφανίζεται το Google ημερολόγιο ή η φόρμα επικοινωνίας.
+            widget: string
+            required: false
+          - name: googleBookingUrl
+            label: Εναλλακτικά — σύνδεσμος Google Appointment Schedule (embed)
+            hint: Χρησιμοποιείται μόνο αν η παραπάνω διεύθυνση είναι κενή.
+            widget: string
+            required: false
+          - { name: timezone, label: Ζώνη ώρας, widget: hidden, default: Europe/Athens }

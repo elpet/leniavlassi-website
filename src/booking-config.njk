@@ -1,0 +1,22 @@
+---
+permalink: /rantevou/config.json
+eleventyExcludeFromCollections: true
+---
+{#- Δημόσιες ρυθμίσεις κρατήσεων· τις διαβάζει το Google Apps Script (booking-backend/Code.gs) -#}
+{%- set publicConfig = {
+  siteUrl: site.url,
+  siteName: site.name,
+  phone: settings.phone,
+  email: settings.email,
+  address: settings.address,
+  timezone: booking.timezone,
+  services: booking.services,
+  slotInterval: booking.slotInterval,
+  bufferMinutes: booking.bufferMinutes,
+  minNoticeHours: booking.minNoticeHours,
+  maxDaysAhead: booking.maxDaysAhead,
+  cancelNoticeHours: booking.cancelNoticeHours,
+  weeklyHours: booking.weeklyHours,
+  blockedDates: booking.blockedDates
+} -%}
+{{ publicConfig | json | safe }}

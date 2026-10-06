@@ -1,0 +1,27 @@
+---
+layout: layouts/base.njk
+title: Ακύρωση ραντεβού
+description: Ακύρωση ραντεβού.
+permalink: /rantevou/akyrosi/
+---
+<section class="page-hero">
+  <div class="container">
+    <p class="eyebrow">Ραντεβού</p>
+    <h1>Ακύρωση ραντεβού</h1>
+  </div>
+</section>
+
+<section class="booking-section">
+  <div class="container">
+    <div class="booking booking-cancel" id="bookingCancel" data-endpoint="{{ booking.appsScriptUrl }}">
+      <p data-cancel-text>Φόρτωση…</p>
+      <div class="booking-cancel-actions" data-cancel-actions hidden>
+        <button type="button" class="btn btn-primary" data-cancel-confirm>Ναι, ακύρωση του ραντεβού</button>
+        <a href="/" class="btn btn-secondary">Όχι, το κρατάω</a>
+      </div>
+      <a href="/rantevou/" class="btn btn-secondary" data-cancel-new hidden>Νέο ραντεβού</a>
+    </div>
+  </div>
+</section>
+
+<script src="/assets/js/booking.js" defer></script>

@@ -1,0 +1,43 @@
+{
+  "appsScriptUrl": "",
+  "googleBookingUrl": "",
+  "timezone": "Europe/Athens",
+  "services": [
+    {
+      "id": "atomiki",
+      "name": "Ατομική συνεδρία",
+      "duration": 50,
+      "description": "Ψυχοθεραπεία ενηλίκων για άγχος, κατάθλιψη, τραύμα, αυτοεκτίμηση και προσωπική ανάπτυξη.",
+      "modes": ["inperson", "online"]
+    },
+    {
+      "id": "zeygous",
+      "name": "Θεραπεία ζεύγους",
+      "duration": 60,
+      "description": "Δουλειά στην επικοινωνία και τη σχέση σας, με σεβασμό στις ανάγκες και των δύο.",
+      "modes": ["inperson", "online"]
+    },
+    {
+      "id": "aksiologisi",
+      "name": "Ψυχοδιαγνωστική αξιολόγηση",
+      "duration": 60,
+      "description": "Κλινική συνέντευξη και ψυχοδιαγνωστική εκτίμηση.",
+      "modes": ["inperson"]
+    }
+  ],
+  "slotInterval": 60,
+  "bufferMinutes": 10,
+  "minNoticeHours": 24,
+  "maxDaysAhead": 45,
+  "cancelNoticeHours": 24,
+  "weeklyHours": {
+    "mon": ["10:00-14:00", "18:00-21:00"],
+    "tue": ["18:00-21:00"],
+    "wed": ["10:00-20:00"],
+    "thu": ["10:00-20:00"],
+    "fri": ["10:00-20:00"],
+    "sat": [],
+    "sun": []
+  },
+  "blockedDates": []
+}
