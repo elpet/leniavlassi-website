@@ -315,7 +315,11 @@ ul { list-style: none; margin: 0; padding: 0; }
   outline: none;
   border-color: var(--color-primary);
 }
-.form-note { margin: 14px 0 0; font-size: 0.9rem; color: var(--color-primary-dark); min-height: 1.2em; }
+.form-hint { font-size: 0.8rem; color: var(--color-text-soft); }
+.form-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; color: var(--color-text-soft); margin-bottom: 20px; cursor: pointer; }
+.form-consent input { margin-top: 4px; accent-color: var(--color-primary); }
+.hp { position: absolute; left: -9999px; }
+.form-note {margin: 14px 0 0; font-size: 0.9rem; color: var(--color-primary-dark); min-height: 1.2em; }
 
 .about-note, .contact-note {
   font-size: 0.8rem;
@@ -460,6 +464,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 .footer-logo { font-family: var(--font-heading); font-size: 1.2rem; color: #fff !important; }
 .footer-nav { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; }
 .site-footer a { color: rgba(255,255,255,0.9); }
+.footer-social { display: flex; gap: 16px; font-weight: 600; }
 .site-footer a:hover { color: #fff; text-decoration: underline; }
 
 /* Responsive */

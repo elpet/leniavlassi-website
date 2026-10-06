@@ -1,0 +1,105 @@
+# Ρυθμίσεις του admin panel (Sveltia CMS) — https://github.com/sveltia/sveltia-cms
+# Κάθε "Αποθήκευση/Δημοσίευση" κάνει commit στο GitHub και το site ενημερώνεται σε ~2 λεπτά.
+
+backend:
+  name: github
+  repo: elpet/leniavlassi-website
+  branch: main
+  commit_messages:
+    create: "Blog: νέο άρθρο «{{slug}}»"
+    update: "Blog: ενημέρωση «{{slug}}»"
+    delete: "Blog: διαγραφή «{{slug}}»"
+    uploadMedia: "Ανέβασμα εικόνας {{path}}"
+    deleteMedia: "Διαγραφή εικόνας {{path}}"
+
+media_folder: src/images/blog
+public_folder: /images/blog
+
+slug:
+  encoding: unicode
+  clean_accents: true
+
+collections:
+  - name: blog
+    label: Άρθρα Blog
+    label_singular: Άρθρο
+    description: >-
+      Γράψτε το άρθρο και πατήστε Save. Με «Πρόχειρο» ενεργό δεν δημοσιεύεται.
+      Με ημερομηνία στο μέλλον δημοσιεύεται αυτόματα εκείνη τη μέρα.
+    folder: src/blog/posts
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{title}}"
+    summary: "{{title}} — {{date}}{{draft | ternary(' (πρόχειρο)', '')}}"
+    sortable_fields: [date, title, category]
+    view_filters:
+      - label: Πρόχειρα
+        field: draft
+        pattern: true
+    fields:
+      - { name: title, label: Τίτλος, widget: string }
+      - name: description
+        label: Σύντομη περιγραφή
+        hint: 1-2 προτάσεις. Εμφανίζεται στη λίστα του blog και στην προεπισκόπηση του Facebook.
+        widget: text
+      - name: date
+        label: Ημερομηνία δημοσίευσης
+        hint: Αν βάλετε μελλοντική ημερομηνία, το άρθρο δημοσιεύεται αυτόματα τότε.
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD/MM/YYYY
+        time_format: false
+      - name: category
+        label: Κατηγορία
+        widget: select
+        required: false
+        options: [Άγχος, Σχέσεις, Αυτοεκτίμηση, Κατάθλιψη, Mindfulness, Τραύμα, Καθημερινότητα, Γονεϊκότητα]
+      - name: image
+        label: Κεντρική εικόνα
+        hint: Ιδανικά οριζόντια, περίπου 1200×630. Αυτή φαίνεται στο Facebook.
+        widget: image
+        required: false
+      - { name: imageAlt, label: Περιγραφή εικόνας (για προσβασιμότητα), widget: string, required: false }
+      - { name: body, label: Κείμενο, widget: markdown }
+      - name: draft
+        label: Πρόχειρο (να μη δημοσιευτεί ακόμα)
+        widget: boolean
+        default: false
+        required: false
+      - name: facebook
+        label: Αυτόματη ανάρτηση στη σελίδα Facebook
+        widget: boolean
+        default: true
+        required: false
+      - name: facebookMessage
+        label: Κείμενο ανάρτησης Facebook (προαιρετικό)
+        hint: Αν μείνει κενό, χρησιμοποιείται η σύντομη περιγραφή.
+        widget: text
+        required: false
+      - name: slug
+        label: Διεύθυνση URL (προαιρετικό)
+        hint: Αφήστε κενό — δημιουργείται αυτόματα από τον τίτλο με λατινικούς χαρακτήρες. Μην το αλλάζετε αφού δημοσιευτεί.
+        widget: string
+        required: false
+
+  - name: settings
+    label: Ρυθμίσεις
+    files:
+      - name: contact
+        label: Στοιχεία επικοινωνίας & φόρμα
+        file: src/_data/settings.json
+        format: json
+        fields:
+          - { name: phone, label: Τηλέφωνο, widget: string }
+          - { name: email, label: Email, widget: string }
+          - { name: address, label: Διεύθυνση, widget: string }
+          - { name: hours, label: Ωράριο, widget: string }
+          - { name: facebookUrl, label: Σελίδα Facebook (URL), widget: string, required: false }
+          - { name: instagramUrl, label: Instagram (URL), widget: string, required: false }
+          - name: web3formsKey
+            label: Κλειδί φόρμας (Web3Forms access key)
+            hint: Από το web3forms.com. Αν μείνει κενό, η φόρμα ανοίγει το email του επισκέπτη.
+            widget: string
+            required: false

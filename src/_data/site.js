@@ -1,5 +1,6 @@
-// Βασικά στοιχεία της ιστοσελίδας. Το SITE_URL ορίζεται στο GitHub Actions
-// (δείτε .github/workflows/deploy.yml) — αλλάξτε το όταν μπει δικό σας domain.
+// Τεχνικά στοιχεία της ιστοσελίδας. Τα στοιχεία επικοινωνίας (τηλέφωνο, email,
+// ωράριο κ.λπ.) βρίσκονται στο settings.json και αλλάζουν από το /admin/.
+// Το SITE_URL ορίζεται στο GitHub Actions (δείτε .github/workflows/deploy.yml).
 export default {
   name: "Λένια Βλάσση",
   title: "Λένια Βλάσση | Ψυχολόγος - Γνωσιακή Συμπεριφορική Θεραπεύτρια",
@@ -8,8 +9,4 @@ export default {
   url: (process.env.SITE_URL || "http://localhost:8080").replace(/\/$/, ""),
   locale: "el_GR",
   defaultImage: "/images/office-sofa.jpg",
-  phone: "216 002 4060",
-  phoneHref: "tel:+302160024060",
-  email: "cvlassi@gmail.com",
-  address: "Λεωφόρος Καλαμακίου 3, Άλιμος Αττικής, 174 55",
 };

@@ -3,6 +3,11 @@ name: Deploy site to GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - ".github/facebook-shared.json"
+  # Κάθε πρωί (07:00 ώρα Ελλάδας) — δημοσιεύει τα προγραμματισμένα άρθρα
+  schedule:
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,7 +17,15 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
+
+# Όταν μεταφερθεί σε δικό σας domain (π.χ. leniavlassi.gr), ορίστε στο repo:
+# Settings → Secrets and variables → Actions → Variables
+#   SITE_URL    = https://leniavlassi.gr
+#   PATH_PREFIX = /
+env:
+  SITE_URL: ${{ vars.SITE_URL || 'https://elpet.github.io/leniavlassi-website' }}
+  PATH_PREFIX: ${{ vars.PATH_PREFIX || '/leniavlassi-website/' }}
 
 jobs:
   build:
@@ -24,14 +37,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # Με δικό σας domain (π.χ. leniavlassi.gr), ορίστε στο repo:
-      # Settings → Secrets and variables → Actions → Variables
-      #   SITE_URL    = https://leniavlassi.gr
-      #   PATH_PREFIX = /
       - run: npm run build
-        env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://elpet.github.io/leniavlassi-website' }}
-          PATH_PREFIX: ${{ vars.PATH_PREFIX || '/leniavlassi-website/' }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
@@ -45,3 +51,29 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Αναρτά τα νέα άρθρα στη σελίδα Facebook (αν έχουν οριστεί τα secrets FB_PAGE_ID/FB_PAGE_TOKEN)
+  facebook:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/facebook-share.mjs
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+      - name: Καταγραφή αναρτημένων άρθρων
+        if: always()
+        run: |
+          git diff --quiet .github/facebook-shared.json && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/facebook-shared.json
+          git commit -m "Facebook: καταγραφή αναρτημένων άρθρων"
+          git pull --rebase
+          git push

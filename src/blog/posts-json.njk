@@ -1,0 +1,18 @@
+---
+permalink: /blog/posts.json
+eleventyExcludeFromCollections: true
+---
+{#- Λίστα δημοσιευμένων άρθρων· τη διαβάζει το scripts/facebook-share.mjs -#}
+[
+{%- for post in collections.posts %}
+  {
+    "path": {{ post.url | json | safe }},
+    "url": {{ (site.url + post.url) | json | safe }},
+    "title": {{ post.data.title | json | safe }},
+    "description": {{ (post.data.description or "") | json | safe }},
+    "date": {{ post.date.toISOString() | json | safe }},
+    "facebook": {{ (post.data.facebook != false) | json | safe }},
+    "facebookMessage": {{ (post.data.facebookMessage or "") | json | safe }}
+  }{% if not loop.last %},{% endif %}
+{%- endfor %}
+]

@@ -13,8 +13,14 @@
         <a href="/contact/">Επικοινωνία</a>
       </nav>
       <div>
-        <p><a href="{{ site.phoneHref }}">{{ site.phone }}</a><br><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-        <p>{{ site.address }}</p>
+        <p><a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a><br><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>
+        <p>{{ settings.address }}</p>
+        {%- if settings.facebookUrl or settings.instagramUrl %}
+        <p class="footer-social">
+          {% if settings.facebookUrl %}<a href="{{ settings.facebookUrl }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+          {% if settings.instagramUrl %}<a href="{{ settings.instagramUrl }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        </p>
+        {%- endif %}
       </div>
     </div>
     <p class="footer-copy">&copy; <span id="year"></span> Λένια Βλάσση — Ψυχολόγος, Γνωσιακή Συμπεριφορική Θεραπεύτρια. Με επιφύλαξη παντός δικαιώματος.</p>

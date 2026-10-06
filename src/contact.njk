@@ -17,14 +17,19 @@ permalink: /contact/
     <div class="contact-info">
       <p>Επικοινωνήστε μαζί μου για να προγραμματίσουμε την πρώτη μας συνάντηση.</p>
       <ul class="contact-list">
-        <li><strong>Διεύθυνση:</strong> {{ site.address }}</li>
-        <li><strong>Τηλέφωνο:</strong> <a href="{{ site.phoneHref }}">{{ site.phone }}</a></li>
-        <li><strong>Email:</strong> <a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-        <li><strong>Ωράριο:</strong> Δευ 10:00-14:00 &amp; 18:00-21:00 · Τρί 18:00-21:00 · Τετ-Παρ 10:00-20:00 · Σαβ-Κυρ κλειστά</li>
+        <li><strong>Διεύθυνση:</strong> {{ settings.address }}</li>
+        <li><strong>Τηλέφωνο:</strong> <a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a></li>
+        <li><strong>Email:</strong> <a href="mailto:{{ settings.email }}">{{ settings.email }}</a></li>
+        <li><strong>Ωράριο:</strong> {{ settings.hours }}</li>
         <li><strong>Ραντεβού:</strong> μέσω <a href="https://www.leniavlassi.com/" target="_blank" rel="noopener">leniavlassi.com</a>, <a href="https://www.doctoranytime.gr/en/d/psychologist-psychotherapist/vlassi-eleni-2" target="_blank" rel="noopener">doctoranytime.gr</a> ή της φόρμας</li>
       </ul>
     </div>
-    <form class="contact-form" id="contactForm" novalidate>
+    <form class="contact-form" id="contactForm" novalidate
+          action="https://api.web3forms.com/submit" method="POST"
+          data-key="{{ settings.web3formsKey }}" data-fallback-email="{{ settings.email }}">
+      <input type="hidden" name="subject" value="Νέο αίτημα ραντεβού από την ιστοσελίδα">
+      <input type="hidden" name="from_name" value="Ιστοσελίδα Λένια Βλάσση">
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="form-row">
         <label for="name">Ονοματεπώνυμο</label>
         <input type="text" id="name" name="name" required>
@@ -39,8 +44,13 @@ permalink: /contact/
       </div>
       <div class="form-row">
         <label for="message">Μήνυμα</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
+        <textarea id="message" name="message" rows="4" required placeholder="Π.χ. προτιμώμενες ημέρες/ώρες, δια ζώσης ή online"></textarea>
+        <small class="form-hint">Παρακαλώ μη συμπεριλάβετε εδώ λεπτομέρειες για την υγεία σας — θα τα συζητήσουμε με ασφάλεια στη συνεδρία.</small>
       </div>
+      <label class="form-consent">
+        <input type="checkbox" name="consent" value="Ναι" required>
+        <span>Συναινώ να χρησιμοποιηθούν τα στοιχεία μου αποκλειστικά για να επικοινωνήσει μαζί μου η Λένια Βλάσση σχετικά με το αίτημά μου.</span>
+      </label>
       <button type="submit" class="btn btn-primary">Αποστολή Αιτήματος</button>
       <p class="form-note" id="formNote" role="status"></p>
     </form>

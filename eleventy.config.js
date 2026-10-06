@@ -7,6 +7,15 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/images");
+  // Admin panel (Sveltia CMS): αντιγράφεται αυτούσιο, δεν περνά από templates
+  eleventyConfig.addPassthroughCopy("src/admin");
+  eleventyConfig.ignores.add("src/admin/**");
+
+  eleventyConfig.addFilter("telHref", (phone) => {
+    const digits = String(phone).replace(/[^\d+]/g, "");
+    return "tel:" + (digits.startsWith("+") ? digits : "+30" + digits);
+  });
+  eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
 
   eleventyConfig.addCollection("posts", (collectionApi) =>
     collectionApi

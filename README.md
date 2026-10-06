@@ -15,17 +15,26 @@ src/                    Δημόσια ιστοσελίδα (Eleventy → στα
   blog/posts/*.md       /blog/<slug>/  Τα άρθρα (Markdown)
   blog/feed.njk         /blog/feed.xml RSS
   _includes/            Layouts (base, post) & κοινά κομμάτια (header, footer, CTA)
-  _data/site.js         Όνομα, URL, τηλέφωνο, email, διεύθυνση
+  _data/site.js         Όνομα, URL του site
+  _data/settings.json   Τηλέφωνο, email, ωράριο, social, κλειδί φόρμας (επεξεργάσιμα από το /admin/)
+  admin/                Admin panel (Sveltia CMS) → /admin/
   assets/  images/
+lib/greeklish.js        Ελληνικοί τίτλοι → URL με λατινικούς
+scripts/facebook-share.mjs     Αυτόματη ανάρτηση νέων άρθρων στη σελίδα Facebook
 eleventy.config.js
-.github/workflows/deploy.yml   Αυτόματο build & deploy στο GitHub Pages
+.github/workflows/deploy.yml   Build & deploy στο GitHub Pages, καθημερινό rebuild, ανάρτηση στο Facebook
+.github/facebook-shared.json   Ποια άρθρα έχουν ήδη αναρτηθεί στο Facebook (το ενημερώνει το Actions)
 
 admin-system/           Ασφαλές back-office ραντεβού & ασθενών (Node/Express)
 ```
 
-## Blog
+## Admin panel, Blog, Facebook & φόρμα
 
-Δείτε το **[BLOG.md](BLOG.md)**: πώς γράφετε ένα άρθρο (κατευθείαν από το GitHub, χωρίς εγκατάσταση) και πώς το κοινοποιείτε στο Facebook.
+Δείτε το **[BLOG.md](BLOG.md)**. Περιέχει:
+- σύνδεση στο admin panel (`/admin/`)
+- συγγραφή, πρόχειρα και προγραμματισμό άρθρων
+- αυτόματη ανάρτηση στη σελίδα Facebook (secrets `FB_PAGE_ID`, `FB_PAGE_TOKEN`)
+- ενεργοποίηση της φόρμας επικοινωνίας (Web3Forms)
 
 Κάθε άρθρο είναι ξεχωριστή σελίδα με Open Graph tags. Έτσι σε Facebook, LinkedIn, Viber και WhatsApp εμφανίζεται σωστή προεπισκόπηση (τίτλος, περιγραφή, εικόνα).
 
@@ -43,7 +52,23 @@ npm run build    # παραγωγή στο _site/
 
 Μία φορά: **Settings → Pages → Build and deployment → Source → GitHub Actions**.
 
-Η σελίδα είναι διαθέσιμη στο `https://elpet.github.io/leniavlassi-website/`. Για δικό σας domain, ορίστε τα repository variables `SITE_URL` και `PATH_PREFIX` (δείτε το `deploy.yml`).
+Η σελίδα είναι προσωρινά διαθέσιμη στο `https://elpet.github.io/leniavlassi-website/`. Κάθε πρωί στις 07:00 γίνεται αυτόματο rebuild, ώστε να δημοσιεύονται τα προγραμματισμένα άρθρα.
+
+### Μεταφορά σε δικό σας domain (leniavlassi.com / .gr)
+
+Δεν χρειάζεται καμία αλλαγή στον κώδικα:
+
+1. **Repo variables**: Settings → Secrets and variables → Actions → **Variables**:
+   - `SITE_URL` = `https://leniavlassi.gr` (το τελικό domain, χωρίς `/` στο τέλος)
+   - `PATH_PREFIX` = `/`
+2. **Settings → Pages → Custom domain**: γράψτε το domain και ενεργοποιήστε **Enforce HTTPS** μόλις γίνει διαθέσιμο.
+3. **DNS** στον πάροχο του domain:
+   - 4 εγγραφές `A` για το `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   - `CNAME` για το `www` → `elpet.github.io`
+4. Actions → «Deploy site to GitHub Pages» → **Run workflow**.
+
+> Αν το domain φιλοξενεί σήμερα άλλη ιστοσελίδα (π.χ. το leniavlassi.com), η αλλαγή DNS την αντικαθιστά.
+> Τότε αφαιρέστε και την κάρτα «Επίσημη Ιστοσελίδα — leniavlassi.com» από το `src/_includes/partials/platforms.njk`.
 
 ## Διαχειριστικό σύστημα (`admin-system/`)
 
