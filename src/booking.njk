@@ -14,6 +14,7 @@ permalink: /rantevou/
 
 <section class="booking-section">
   <div class="container">
+    <p class="crisis-note" role="note">Η online κράτηση δεν εξυπηρετεί επείγοντα. Αν βρίσκεστε σε κρίση, καλέστε <a href="tel:112">112</a> ή <a href="tel:1018">1018</a> — <a href="/amesi-voitheia/">άμεση βοήθεια</a>.</p>
   {%- if booking.appsScriptUrl %}
     <div class="booking" id="booking" data-endpoint="{{ booking.appsScriptUrl }}">
 
@@ -101,8 +102,12 @@ permalink: /rantevou/
               <small class="form-hint">Παρακαλώ μη συμπεριλάβετε λεπτομέρειες για την υγεία σας — θα τα συζητήσουμε με ασφάλεια στη συνεδρία.</small>
             </div>
             <label class="form-consent">
+              <input type="checkbox" name="adult" required>
+              <span>Είμαι άνω των 18 ετών (για ανήλικο, την κράτηση κάνει ο γονέας/κηδεμόνας τηλεφωνικά).</span>
+            </label>
+            <label class="form-consent">
               <input type="checkbox" name="consent" required>
-              <span>Συναινώ να χρησιμοποιηθούν τα στοιχεία μου αποκλειστικά για τη διαχείριση του ραντεβού μου.</span>
+              <span>Συναινώ ρητά στην επεξεργασία των στοιχείων μου, συμπεριλαμβανομένου του ότι ζητώ ψυχολογικές υπηρεσίες (δεδομένα υγείας, άρθρο 9 ΓΚΠΔ), αποκλειστικά για τη διαχείριση του ραντεβού μου, σύμφωνα με την <a href="/politiki-aporritou/" target="_blank" class="text-link">Πολιτική Απορρήτου</a>. Μπορώ να ανακαλέσω τη συγκατάθεσή μου οποιαδήποτε στιγμή.</span>
             </label>
             <button type="submit" class="btn btn-primary" data-submit>Επιβεβαίωση ραντεβού</button>
             <p class="form-note" data-form-note role="status"></p>

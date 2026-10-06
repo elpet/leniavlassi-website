@@ -26,7 +26,8 @@ document.querySelectorAll('.accordion-trigger').forEach((trigger) => {
   });
 });
 
-// Contact form — αποστολή μέσω Web3Forms (το κλειδί ορίζεται στο /admin/ → Ρυθμίσεις)
+// Contact form — αποστολή μέσω του Google Apps Script των κρατήσεων (αν έχει ρυθμιστεί),
+// αλλιώς μέσω Web3Forms (κλειδί στο /admin/ → Ρυθμίσεις), αλλιώς με το email του επισκέπτη.
 const contactForm = document.getElementById('contactForm');
 const formNote = document.getElementById('formNote');
 if (contactForm) {
@@ -39,30 +40,48 @@ if (contactForm) {
 
     const data = new FormData(contactForm);
     const key = contactForm.dataset.key;
+    const endpoint = contactForm.dataset.endpoint;
 
-    // Χωρίς κλειδί: ανοίγει το email του επισκέπτη με το μήνυμα έτοιμο
-    if (!key) {
+    // Χωρίς backend: ανοίγει το email του επισκέπτη με το μήνυμα έτοιμο
+    if (!key && !endpoint) {
       const body = `Ονοματεπώνυμο: ${data.get('name')}\nEmail: ${data.get('email')}\nΤηλέφωνο: ${data.get('phone')}\n\n${data.get('message')}`;
       window.location.href = `mailto:${contactForm.dataset.fallbackEmail}?subject=${encodeURIComponent(data.get('subject'))}&body=${encodeURIComponent(body)}`;
       return;
     }
 
-    data.append('access_key', key);
     const button = contactForm.querySelector('button[type="submit"]');
     button.disabled = true;
     formNote.textContent = 'Αποστολή…';
     try {
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: data,
-      });
+      const response = endpoint
+        ? await fetch(endpoint, {
+            method: 'POST',
+            // text/plain → χωρίς CORS preflight (απαιτείται από το Apps Script)
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({
+              action: 'contact',
+              name: data.get('name'),
+              email: data.get('email'),
+              phone: data.get('phone'),
+              message: data.get('message'),
+              consent: data.get('consent') === 'Ναι',
+              website: data.get('botcheck') ? 'bot' : '',
+            }),
+          })
+        : await fetch(contactForm.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: (data.append('access_key', key), data),
+          });
       const result = await response.json();
-      if (!result.success) throw new Error(result.message);
+      // Apps Script → { ok, error } · Web3Forms → { success, message }
+      if (!(result.ok || result.success)) throw new Error(result.error || '');
       formNote.textContent = 'Ευχαριστούμε! Το αίτημά σας εστάλη. Θα επικοινωνήσουμε σύντομα μαζί σας.';
       contactForm.reset();
-    } catch {
-      formNote.textContent = `Κάτι πήγε στραβά. Δοκιμάστε ξανά ή στείλτε email στο ${contactForm.dataset.fallbackEmail}.`;
+    } catch (err) {
+      // Μηνύματα του server (π.χ. «Το email δεν είναι έγκυρο») · σφάλματα δικτύου → γενικό μήνυμα
+      formNote.textContent = (err instanceof TypeError ? '' : err.message)
+        || `Κάτι πήγε στραβά. Δοκιμάστε ξανά ή στείλτε email στο ${contactForm.dataset.fallbackEmail}.`;
     } finally {
       button.disabled = false;
     }

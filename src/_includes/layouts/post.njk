@@ -52,7 +52,7 @@ layout: layouts/base.njk
       </div>
     </div>
 
-    <p class="post-disclaimer">Τα άρθρα έχουν ενημερωτικό χαρακτήρα και δεν υποκαθιστούν την εξατομικευμένη ψυχολογική υποστήριξη.</p>
+    <p class="post-disclaimer">Το άρθρο έχει αποκλειστικά ενημερωτικό χαρακτήρα. Δεν αποτελεί ψυχολογική εκτίμηση ή ιατρική συμβουλή και δεν υποκαθιστά την εξατομικευμένη υποστήριξη από ειδικό.{% if updated %} Τελευταία ενημέρωση άρθρου: {{ updated | dateGr }}.{% endif %} Αν βρίσκεστε σε κρίση, δείτε την <a href="/amesi-voitheia/">άμεση βοήθεια</a>.</p>
 
     {%- set others = [] -%}
     {%- for p in collections.posts -%}{%- if p.url != page.url and others.length < 2 -%}{%- set others = (others.push(p), others) -%}{%- endif -%}{%- endfor -%}

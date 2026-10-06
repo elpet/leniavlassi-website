@@ -55,6 +55,7 @@ function doPost(e) {
     const body = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     if (body.action === 'book') return json_(book_(body));
     if (body.action === 'cancel') return json_(cancel_(body));
+    if (body.action === 'contact') return json_(contact_(body));
     throw new UserError('Άγνωστη ενέργεια.');
   } catch (err) {
     return errorResponse_(err);
@@ -153,6 +154,7 @@ function book_(body) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new UserError('Το email δεν είναι έγκυρο.');
   if (!phone) throw new UserError('Συμπληρώστε ένα τηλέφωνο επικοινωνίας.');
   if (body.consent !== true) throw new UserError('Απαιτείται η συναίνεσή σας για την επεξεργασία των στοιχείων.');
+  if (body.adult !== true) throw new UserError('Η online κράτηση απευθύνεται σε ενήλικες. Για ανήλικο, καλέστε τηλεφωνικά.');
 
   const cache = CacheService.getScriptCache();
   const rateKey = 'rate:' + email;
@@ -209,6 +211,41 @@ function book_(body) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// ---------- Φόρμα επικοινωνίας ----------
+
+function contact_(body) {
+  if (body.website) return { ok: true }; // honeypot: bots
+  const config = getConfig_();
+  const name = clean_(body.name, 100);
+  const email = clean_(body.email, 200).toLowerCase();
+  const phone = clean_(body.phone, 30);
+  const message = clean_(body.message, 3000);
+  if (name.length < 2) throw new UserError('Συμπληρώστε το ονοματεπώνυμό σας.');
+  if (!/^[^s@]+@[^s@]+.[^s@]+$/.test(email)) throw new UserError('Το email δεν είναι έγκυρο.');
+  if (!message) throw new UserError('Γράψτε το μήνυμά σας.');
+  if (body.consent !== true) throw new UserError('Απαιτείται η συναίνεσή σας για την επεξεργασία των στοιχείων.');
+
+  const cache = CacheService.getScriptCache();
+  const rateKey = 'contact:' + email;
+  const count = Number(cache.get(rateKey) || 0);
+  if (count >= 5) throw new UserError('Έχετε στείλει ήδη αρκετά μηνύματα. Θα επικοινωνήσω σύντομα μαζί σας.');
+  cache.put(rateKey, String(count + 1), 86400);
+
+  MailApp.sendEmail({
+    to: SETTINGS.NOTIFY_EMAIL || Session.getEffectiveUser().getEmail(),
+    subject: `Μήνυμα από την ιστοσελίδα: ${name}`,
+    body: `${name}
+${email}
+${phone}
+
+${message}
+
+— Φόρμα επικοινωνίας ${config.siteUrl}`,
+    replyTo: email,
+  });
+  return { ok: true };
 }
 
 // ---------- Ακύρωση ----------

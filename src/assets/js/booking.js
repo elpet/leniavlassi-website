@@ -169,6 +169,7 @@ function initBooking(root) {
           phone: data.get('phone'),
           message: data.get('message'),
           consent: data.get('consent') === 'on',
+          adult: data.get('adult') === 'on',
           website: data.get('website'),
         },
       });

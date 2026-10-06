@@ -3,11 +3,12 @@
     <div class="footer-grid">
       <div>
         <p class="footer-logo">Λένια Βλάσση</p>
-        <p>Ψυχολόγος · Γνωσιακή Συμπεριφορική Θεραπεύτρια<br>Άλιμος &amp; online</p>
+        <p>{{ settings.legal.title }} · Γνωσιακή Συμπεριφορική Θεραπεύτρια<br>Άλιμος{% if settings.practice.onlineSessions %} &amp; online{% endif %}</p>
       </div>
       <nav class="footer-nav" aria-label="Μενού υποσέλιδου">
         <a href="/about/">Σχετικά</a>
         <a href="/services/">Υπηρεσίες</a>
+        <a href="/plirofories/">Πρακτικές πληροφορίες</a>
         <a href="/blog/">Blog</a>
         <a href="/faq/">Συχνές Ερωτήσεις</a>
         <a href="/rantevou/">Κλείστε ραντεβού</a>
@@ -24,7 +25,23 @@
         {%- endif %}
       </div>
     </div>
-    <p class="footer-copy">&copy; <span id="year"></span> Λένια Βλάσση — Ψυχολόγος, Γνωσιακή Συμπεριφορική Θεραπεύτρια. Με επιφύλαξη παντός δικαιώματος.</p>
-    <p class="footer-note">Σε περίπτωση έκτακτης ανάγκης, καλέστε το 166 (ΕΚΑΒ) ή απευθυνθείτε στο πλησιέστερο νοσοκομείο.</p>
+
+    <p class="footer-help">
+      <strong>Χρειάζεστε άμεση βοήθεια;</strong>
+      Έκτακτη ανάγκη <a href="tel:112">112</a> · ΕΚΑΒ <a href="tel:166">166</a> ·
+      Γραμμή για την αυτοκτονία <a href="tel:1018">1018</a> ·
+      <a href="/amesi-voitheia/">Όλες οι γραμμές βοήθειας</a>
+    </p>
+
+    <nav class="footer-legal" aria-label="Νομικές πληροφορίες">
+      <a href="/stoixeia-epaggelmatia/">Στοιχεία επαγγελματία</a>
+      <a href="/politiki-aporritou/">Πολιτική απορρήτου</a>
+      <a href="/cookies/">Cookies</a>
+      <a href="/oroi-xrisis/">Όροι χρήσης</a>
+      <a href="/prosvasimotita/">Προσβασιμότητα</a>
+    </nav>
+
+    <p class="footer-copy">&copy; <span id="year"></span> {{ settings.legal.fullName }} — {{ settings.legal.title }}. Με επιφύλαξη παντός δικαιώματος.</p>
+    <p class="footer-note">Τελευταία ενημέρωση ιστοσελίδας: {{ build.lastUpdated | dateGr }}{% if settings.legal.licenseNumber %} · Άδεια άσκησης επαγγέλματος αρ. {{ settings.legal.licenseNumber }}{% endif %}</p>
   </div>
 </footer>

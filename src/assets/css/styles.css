@@ -627,6 +627,73 @@ ul { list-style: none; margin: 0; padding: 0; }
 .booking-info strong { color: var(--color-primary-dark); font-family: var(--font-heading); font-weight: 500; font-size: 1rem; }
 .booking-info a:hover { color: var(--color-primary); }
 
+/* Προσβασιμότητα */
+.skip-link {
+  position: absolute; left: 16px; top: -60px; z-index: 200;
+  background: var(--color-gold); color: var(--color-primary-dark);
+  padding: 10px 18px; border-radius: var(--radius); font-weight: 600;
+}
+.skip-link:focus { top: 12px; }
+main:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.site-header :focus-visible, .hero :focus-visible, .page-hero :focus-visible,
+.cta-band :focus-visible, .site-footer :focus-visible { outline-color: var(--color-gold); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* Σελίδες κειμένου (νομικά, πληροφορίες) */
+.prose-section { padding: 64px 0 90px; }
+.prose { font-size: 1rem; line-height: 1.75; }
+.prose h2 { font-size: 1.9rem; margin-top: 1.6em; }
+.prose h3 { font-size: 1.35rem; margin-top: 1.3em; }
+.prose p, .prose li { color: var(--color-text); }
+.prose ul { list-style: disc; padding-left: 1.3em; margin: 0 0 1em; }
+.prose li { margin-bottom: 0.4em; }
+.prose a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 2px; }
+.prose blockquote { margin: 1.4em 0; padding: 14px 20px; background: var(--color-sand); border-left: 3px solid var(--color-gold); }
+.prose blockquote p { margin: 0; }
+.prose-updated { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--color-border); font-size: 0.85rem; }
+.legal-list { display: grid; grid-template-columns: max-content 1fr; gap: 10px 24px; margin: 0 0 1em; }
+.legal-list dt { font-weight: 600; color: var(--color-text); }
+.legal-list dd { margin: 0; color: var(--color-text); }
+.fees-table { width: 100%; border-collapse: collapse; margin: 0 0 1em; }
+.fees-table th, .fees-table td { text-align: left; padding: 12px 8px; border-bottom: 1px solid var(--color-border); }
+.fees-table th { font-family: var(--font-heading); font-weight: 500; font-size: 1.1rem; color: var(--color-primary-dark); }
+
+/* Σημείωση κρίσης & σελίδα «Άμεση βοήθεια» */
+.crisis-note {
+  max-width: 980px; margin: 0 auto 28px; padding: 12px 18px;
+  background: var(--color-sand); border-left: 3px solid var(--color-gold);
+  font-size: 0.88rem; color: var(--color-text);
+}
+.crisis-note a { color: var(--color-primary); font-weight: 600; text-decoration: underline; }
+.contact .crisis-note { margin-bottom: 40px; }
+.help-section { padding: 56px 0 90px; }
+.help-emergency { background: var(--color-primary); color: var(--color-on-dark); padding: 32px; border-radius: var(--radius); margin-bottom: 48px; }
+.help-emergency p { color: rgba(244, 240, 231, 0.85); margin: 0; }
+.help-emergency-title { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-on-dark) !important; margin-bottom: 20px !important; }
+.help-numbers { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.help-number {
+  display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-radius: var(--radius);
+  background: var(--color-gold); color: var(--color-primary-dark);
+}
+.help-number strong { font-family: var(--font-heading); font-size: 2rem; line-height: 1; }
+.help-number span { font-size: 0.85rem; font-weight: 600; max-width: 160px; }
+.help-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+.help-list li { display: flex; gap: 20px; align-items: center; background: var(--color-surface); padding: 20px 24px; border-radius: var(--radius); border: 1px solid var(--color-border); }
+.help-list a strong { font-family: var(--font-heading); font-size: 2rem; color: var(--color-primary-dark); min-width: 90px; display: inline-block; }
+.help-list div { display: flex; flex-direction: column; }
+.help-name { font-weight: 600; color: var(--color-text); }
+.help-desc { font-size: 0.9rem; color: var(--color-text-soft); }
+
+/* Footer: γραμμή βοήθειας & νομικά */
+.footer-help { font-size: 0.85rem !important; padding: 14px 18px; border: 1px solid rgba(196, 165, 113, 0.3); border-radius: var(--radius); margin-bottom: 20px !important; }
+.footer-help strong { color: var(--color-gold); margin-right: 6px; }
+.footer-help a { text-decoration: underline; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 0.85rem; margin-bottom: 14px; }
+
 /* Responsive */
 @media (max-width: 980px) {
   .menu-toggle { display: flex; }
@@ -679,4 +746,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   .page-hero { background-size: auto 110%, auto, auto; background-position: right -60px top -20px, center, center; }
   .cta-band { background-size: auto 120%, auto; background-position: right -110px center, center; }
   .post-content { font-size: 1rem; }
+  .legal-list { grid-template-columns: 1fr; gap: 2px; }
+  .legal-list dd { margin-bottom: 10px; }
+  .help-list li { flex-direction: column; align-items: flex-start; gap: 4px; }
 }

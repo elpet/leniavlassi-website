@@ -6,9 +6,9 @@ backend:
   repo: elpet/leniavlassi-website
   branch: main
   commit_messages:
-    create: "Blog: νέο άρθρο «{{slug}}»"
-    update: "Blog: ενημέρωση «{{slug}}»"
-    delete: "Blog: διαγραφή «{{slug}}»"
+    create: "Admin: νέο «{{slug}}» ({{collection}})"
+    update: "Admin: ενημέρωση «{{slug}}» ({{collection}})"
+    delete: "Admin: διαγραφή «{{slug}}» ({{collection}})"
     uploadMedia: "Ανέβασμα εικόνας {{path}}"
     deleteMedia: "Διαγραφή εικόνας {{path}}"
 
@@ -26,6 +26,9 @@ collections:
     description: >-
       Γράψτε το άρθρο και πατήστε Save. Με «Πρόχειρο» ενεργό δεν δημοσιεύεται.
       Με ημερομηνία στο μέλλον δημοσιεύεται αυτόματα εκείνη τη μέρα.
+      Κώδικας Δεοντολογίας Ψυχολόγων: τα άρθρα να είναι ενημερωτικά και όχι διαφημιστικά (άρθρο 10),
+      χωρίς ψυχολογικά τεστ/ερωτηματολόγια (άρθρο 5), χωρίς ιατρικές συμβουλές (άρθρο 4) και
+      χωρίς στοιχεία που θα μπορούσαν να αναγνωρίσουν θεραπευόμενο.
     folder: src/blog/posts
     extension: md
     format: frontmatter
@@ -63,6 +66,13 @@ collections:
         required: false
       - { name: imageAlt, label: Περιγραφή εικόνας (για προσβασιμότητα), widget: string, required: false }
       - { name: body, label: Κείμενο, widget: markdown }
+      - name: updated
+        label: Τελευταία ουσιαστική ενημέρωση (προαιρετικό)
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: DD/MM/YYYY
+        time_format: false
+        required: false
       - name: draft
         label: Πρόχειρο (να μη δημοσιευτεί ακόμα)
         widget: boolean
@@ -75,7 +85,7 @@ collections:
         required: false
       - name: facebookMessage
         label: Κείμενο ανάρτησης Facebook (προαιρετικό)
-        hint: Αν μείνει κενό, χρησιμοποιείται η σύντομη περιγραφή.
+        hint: Αν μείνει κενό, χρησιμοποιείται η σύντομη περιγραφή. Ενημερωτικό ύφος — όχι προτροπές για ραντεβού ή προσφορές (άρθρο 10 Κώδικα Δεοντολογίας).
         widget: text
         required: false
       - name: slug
@@ -120,9 +130,41 @@ collections:
           - { name: instagramUrl, label: Instagram (URL), widget: string, required: false }
           - name: web3formsKey
             label: Κλειδί φόρμας (Web3Forms access key)
-            hint: Από το web3forms.com. Αν μείνει κενό, η φόρμα ανοίγει το email του επισκέπτη.
+            hint: Χρειάζεται μόνο αν ΔΕΝ έχει ρυθμιστεί το Google Apps Script των κρατήσεων (τότε η φόρμα στέλνει μέσω αυτού). Αν μείνουν κενά και τα δύο, η φόρμα ανοίγει το email του επισκέπτη.
             widget: string
             required: false
+          - name: legal
+            label: Στοιχεία επαγγελματία (νομικές πληροφορίες)
+            widget: object
+            collapsed: false
+            fields:
+              - { name: fullName, label: Ονοματεπώνυμο, widget: string }
+              - { name: title, label: Επαγγελματικός τίτλος, widget: string, hint: Μόνο τίτλοι που έχουν αποκτηθεί νόμιμα (άρθρο 10 Κώδικα Δεοντολογίας). }
+              - { name: licenseNumber, label: Αριθμός άδειας άσκησης επαγγέλματος, widget: string, required: false, hint: Συνιστάται — εμφανίζεται στα Στοιχεία επαγγελματία και στο υποσέλιδο. }
+              - { name: licenseAuthority, label: Αρχή έκδοσης άδειας (π.χ. Περιφέρεια Αττικής), widget: string, required: false }
+              - { name: afm, label: ΑΦΜ (προαιρετικό), widget: string, required: false }
+              - { name: doy, label: ΔΟΥ (προαιρετικό), widget: string, required: false }
+              - { name: association, label: Επαγγελματικός σύλλογος (αν είστε μέλος), widget: string, required: false }
+              - { name: conflictOfInterest, label: Δήλωση σύγκρουσης συμφερόντων (άρθρο 11), widget: text }
+              - { name: insuranceContracts, label: Συμβάσεις με Δημόσιο/ΕΟΠΥΥ/ασφαλιστικά ταμεία (προαιρετικό), widget: text, required: false }
+          - name: practice
+            label: Πρακτικές πληροφορίες συνεδριών
+            widget: object
+            collapsed: false
+            fields:
+              - { name: onlineSessions, label: Παρέχονται online συνεδρίες, widget: boolean, default: true }
+              - { name: onlinePlatform, label: Πλατφόρμα online συνεδριών (προαιρετικό), widget: string, required: false }
+              - { name: sessionDuration, label: Διάρκεια συνεδρίας, widget: string }
+              - name: fees
+                label: Αμοιβές (προαιρετικό — αν μείνει κενό, «θα ενημερωθείτε τηλεφωνικά»)
+                widget: list
+                required: false
+                summary: "{{service}}: {{price}}"
+                fields:
+                  - { name: service, label: Υπηρεσία, widget: string }
+                  - { name: price, label: Αμοιβή (π.χ. 60 €), widget: string }
+              - { name: paymentMethods, label: Τρόποι πληρωμής (π.χ. μετρητά, κάρτα, IRIS), widget: string, required: false }
+              - { name: cancellationPolicy, label: Πολιτική ακυρώσεων, widget: text }
 
       - name: booking
         label: Κρατήσεις ραντεβού

@@ -67,6 +67,8 @@ if (!pending.length) {
 
 let failed = false;
 for (const post of pending) {
+  // Ενημερωτικό κείμενο χωρίς προτροπή για ραντεβού (άρθρο 10 Κώδικα Δεοντολογίας Ψυχολόγων:
+  // απαγορεύεται η δημόσια διαφήμιση, και μέσω κοινωνικών δικτύων)
   const message = post.facebookMessage || post.description || post.title;
   console.log(`→ ${post.title}\n  ${post.url}`);
   if (DRY_RUN) continue;
