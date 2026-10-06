@@ -17,10 +17,11 @@
       <div>
         <p><a href="{{ settings.phone | telHref }}">{{ settings.phone }}</a><br><a href="mailto:{{ settings.email }}">{{ settings.email }}</a></p>
         <p>{{ settings.address }}<br><a href="{{ settings | mapUrl }}" target="_blank" rel="noopener">Οδηγίες στον χάρτη</a></p>
-        {%- if settings.facebookUrl or settings.instagramUrl %}
+        {%- if settings.facebookUrl or settings.instagramUrl or settings.linkedinUrl %}
         <p class="footer-social">
           {% if settings.facebookUrl %}<a href="{{ settings.facebookUrl }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
           {% if settings.instagramUrl %}<a href="{{ settings.instagramUrl }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+          {% if settings.linkedinUrl %}<a href="{{ settings.linkedinUrl }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
         </p>
         {%- endif %}
       </div>

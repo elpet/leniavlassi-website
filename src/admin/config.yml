@@ -182,6 +182,7 @@ collections:
           - { name: hours, label: Ωράριο, widget: string }
           - { name: facebookUrl, label: Σελίδα Facebook (URL), widget: string, required: false }
           - { name: instagramUrl, label: Instagram (URL), widget: string, required: false }
+          - { name: linkedinUrl, label: LinkedIn (URL), widget: string, required: false }
           - name: web3formsKey
             label: Κλειδί φόρμας (Web3Forms access key)
             hint: Χρειάζεται μόνο αν ΔΕΝ έχει ρυθμιστεί το Google Apps Script των κρατήσεων (τότε η φόρμα στέλνει μέσω αυτού). Αν μείνουν κενά και τα δύο, η φόρμα ανοίγει το email του επισκέπτη.
@@ -209,6 +210,14 @@ collections:
               - { name: googleSiteVerification, label: Κωδικός επαλήθευσης Google Search Console, widget: string, required: false, hint: "Από το Search Console → Μέθοδος «Ετικέτα HTML»: μόνο η τιμή content=\"…\"." }
               - { name: bingSiteVerification, label: Κωδικός επαλήθευσης Bing Webmaster Tools, widget: string, required: false }
               - { name: googleBusinessUrl, label: Link καταχώρισης Google Business (Google Maps), widget: string, required: false, hint: "Google Maps → η καταχώρισή σας → Κοινοποίηση → Αντιγραφή συνδέσμου. Χρησιμοποιείται στο «Οδηγίες στον χάρτη» και συνδέει την καταχώριση με το site για το Google." }
+              - name: geo
+                label: Συντεταγμένες γραφείου (από το Google Maps)
+                widget: object
+                collapsed: true
+                required: false
+                fields:
+                  - { name: latitude, label: Γεωγραφικό πλάτος, widget: number, value_type: float, required: false }
+                  - { name: longitude, label: Γεωγραφικό μήκος, widget: number, value_type: float, required: false }
               - name: sameAs
                 label: Επαγγελματικά προφίλ (Google Business, doctoranytime κ.λπ.)
                 hint: Βοηθούν το Google να συνδέσει τα προφίλ σας με την ιστοσελίδα.
