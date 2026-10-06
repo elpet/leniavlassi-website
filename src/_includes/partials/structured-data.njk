@@ -1,28 +1,4 @@
-{#- Δομημένα δεδομένα (schema.org) για τις μηχανές αναζήτησης — μόνο πραγματικά στοιχεία -#}
-{%- set ld = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "@id": site.url + "/#practice",
-  "name": site.name + " — " + settings.legal.title,
-  "description": site.description,
-  "url": site.url + "/",
-  "image": site.url + site.defaultImage,
-  "telephone": settings.phone | telHref | replace("tel:", ""),
-  "email": settings.email,
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Λεωφόρος Καλαμακίου 3",
-    "addressLocality": "Άλιμος",
-    "postalCode": "17455",
-    "addressRegion": "Αττική",
-    "addressCountry": "GR"
-  },
-  "areaServed": "GR",
-  "knowsLanguage": "el",
-  "founder": {
-    "@type": "Person",
-    "name": settings.legal.fullName,
-    "jobTitle": settings.legal.title
-  }
-} -%}
-<script type="application/ld+json">{{ ld | json | safe }}</script>
+{#- Δομημένα δεδομένα schema.org — δείτε lib/structured-data.js -#}
+{%- if not noindex %}
+<script type="application/ld+json">{% structuredData %}</script>
+{%- endif %}

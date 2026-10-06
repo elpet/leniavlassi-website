@@ -1,4 +1,8 @@
 import { HtmlBasePlugin } from "@11ty/eleventy";
+import markdownIt from "markdown-it";
+import { structuredData } from "./lib/structured-data.js";
+
+const md = markdownIt({ html: false, linkify: true, typographer: false });
 
 export default function (eleventyConfig) {
   // Τα links γράφονται ως "/blog/" κ.λπ. — το plugin προσθέτει αυτόματα το pathPrefix
@@ -17,6 +21,13 @@ export default function (eleventyConfig) {
     return "tel:" + (digits.startsWith("+") ? digits : "+30" + digits);
   });
   eleventyConfig.addFilter("json", (value) => JSON.stringify(value));
+  // Markdown από τα αρχεία δεδομένων (π.χ. απαντήσεις FAQ που γράφονται στο /admin/)
+  eleventyConfig.addFilter("md", (text) => md.render(String(text || "")));
+  // JSON-LD της τρέχουσας σελίδας· το "<" γίνεται < ώστε να μην κλείνει το <script>
+  eleventyConfig.addShortcode("structuredData", function () {
+    const json = JSON.stringify(structuredData(this.ctx, (text) => md.render(String(text || ""))));
+    return json.replace(/</g, "\\u003c");
+  });
 
   eleventyConfig.addCollection("posts", (collectionApi) =>
     collectionApi

@@ -97,6 +97,60 @@ collections:
   - name: pages
     label: Περιεχόμενο σελίδων
     files:
+      - name: about
+        label: Βιογραφικό
+        file: src/_data/about.json
+        format: json
+        fields:
+          - { name: subtitle, label: Υπότιτλος, widget: string }
+          - name: bio
+            label: Κείμενο βιογραφικού (μία παράγραφος ανά στοιχείο)
+            widget: list
+            field: { name: paragraph, label: Παράγραφος, widget: text }
+          - name: credentials
+            label: Σπουδές & εκπαίδευση
+            hint: Μόνο τίτλοι που έχουν αποκτηθεί νόμιμα. Ό,τι δεν έχει ολοκληρωθεί σημειώνεται «σε εξέλιξη» (άρθρο 10 Κώδικα Δεοντολογίας).
+            widget: list
+            summary: "{{text}}"
+            fields:
+              - { name: text, label: Τίτλος / εκπαίδευση, widget: text }
+              - { name: inProgress, label: Σε εξέλιξη, widget: boolean, default: false, required: false }
+          - name: highlights
+            label: Τρία βασικά στοιχεία (αρχική σελίδα)
+            widget: list
+            max: 4
+            summary: "{{label}} — {{detail}}"
+            fields:
+              - { name: label, label: Σύντομο (π.χ. ΕΚΠΑ), widget: string }
+              - { name: detail, label: Περιγραφή, widget: string }
+          - name: alumniOf
+            label: Πανεπιστήμια αποφοίτησης (για το Google)
+            widget: list
+            field: { name: name, label: Πανεπιστήμιο, widget: string }
+      - name: areas
+        label: Τομείς που καλύπτω
+        file: src/_data/areas.json
+        format: json
+        fields:
+          - { name: intro, label: Εισαγωγικό κείμενο (σελίδα Υπηρεσιών), widget: text }
+          - name: list
+            label: Τομείς
+            hint: Εμφανίζονται στην αρχική και στις Υπηρεσίες, και δηλώνονται στο Google ως αντικείμενο εξειδίκευσης.
+            widget: list
+            field: { name: area, label: Τομέας, widget: string }
+      - name: faq
+        label: Συχνές ερωτήσεις
+        file: src/_data/faq.json
+        format: json
+        fields:
+          - name: list
+            label: Ερωτήσεις
+            label_singular: Ερώτηση
+            widget: list
+            summary: "{{question}}"
+            fields:
+              - { name: question, label: Ερώτηση, widget: string }
+              - { name: answer, label: Απάντηση, widget: markdown, buttons: [bold, italic, link], editor_components: [], modes: [rich_text] }
       - name: services
         label: Υπηρεσίες
         file: src/_data/services.json
@@ -147,6 +201,18 @@ collections:
               - { name: association, label: Επαγγελματικός σύλλογος (αν είστε μέλος), widget: string, required: false }
               - { name: conflictOfInterest, label: Δήλωση σύγκρουσης συμφερόντων (άρθρο 11), widget: text }
               - { name: insuranceContracts, label: Συμβάσεις με Δημόσιο/ΕΟΠΥΥ/ασφαλιστικά ταμεία (προαιρετικό), widget: text, required: false }
+          - name: seo
+            label: Google & μηχανές αναζήτησης
+            widget: object
+            collapsed: true
+            fields:
+              - { name: googleSiteVerification, label: Κωδικός επαλήθευσης Google Search Console, widget: string, required: false, hint: "Από το Search Console → Μέθοδος «Ετικέτα HTML»: μόνο η τιμή content=\"…\"." }
+              - { name: bingSiteVerification, label: Κωδικός επαλήθευσης Bing Webmaster Tools, widget: string, required: false }
+              - name: sameAs
+                label: Επαγγελματικά προφίλ (Google Business, doctoranytime κ.λπ.)
+                hint: Βοηθούν το Google να συνδέσει τα προφίλ σας με την ιστοσελίδα.
+                widget: list
+                field: { name: url, label: URL, widget: string }
           - name: practice
             label: Πρακτικές πληροφορίες συνεδριών
             widget: object

@@ -24,5 +24,14 @@
     "fees": [],
     "paymentMethods": "",
     "cancellationPolicy": "Παρακαλώ ενημερώστε για ακύρωση ή αλλαγή ραντεβού τουλάχιστον 24 ώρες νωρίτερα, μέσω του συνδέσμου στο email επιβεβαίωσης ή τηλεφωνικά."
+  },
+  "seo": {
+    "googleSiteVerification": "",
+    "bingSiteVerification": "",
+    "sameAs": [
+      "https://www.leniavlassi.com/",
+      "https://www.doctoranytime.gr/en/d/psychologist-psychotherapist/vlassi-eleni-2",
+      "https://clicktotherapy.gr/en/psychologist/eleni-blassi/"
+    ]
   }
 }

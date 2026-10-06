@@ -1,6 +1,6 @@
 <article class="post-card">
   <a href="{{ post.url }}" class="post-card-image">
-    <img src="{{ post.data.image or site.defaultImage }}" alt="{{ post.data.imageAlt or post.data.title }}" loading="lazy">
+    <img src="{{ post.data.image or site.defaultImage }}" alt="{{ post.data.imageAlt or post.data.title }}" width="800" height="450" loading="lazy">
   </a>
   <div class="post-card-body">
     <p class="post-meta"><time datetime="{{ post.date | dateIso }}">{{ post.date | dateGr }}</time>{% if post.data.category %} · {{ post.data.category }}{% endif %}</p>

@@ -1,8 +1,9 @@
 ---
 layout: layouts/base.njk
 title: Συχνές Ερωτήσεις
-description: Διάρκεια συνεδρίας, εχεμύθεια, online συνεδρίες και πώς να κλείσετε ραντεβού με τη Λένια Βλάσση.
+description: Συχνές ερωτήσεις για την ψυχοθεραπεία με τη Λένια Βλάσση, Ψυχολόγο στον Άλιμο — διάρκεια, κόστος, εχεμύθεια, online συνεδρίες, ακυρώσεις.
 permalink: /faq/
+breadcrumb: Συχνές ερωτήσεις
 ---
 <section class="page-hero">
   <div class="container">
@@ -14,38 +15,12 @@ permalink: /faq/
 <section class="faq">
   <div class="container faq-inner">
     <div class="accordion" id="accordion">
+      {%- for item in faq.list %}
       <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Πόσο διαρκεί μια συνεδρία;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>Κάθε συνεδρία διαρκεί περίπου 45-50 λεπτά. Η πρώτη συνάντηση μπορεί να διαρκέσει λίγο περισσότερο.</p></div>
+        <button class="accordion-trigger" aria-expanded="false">{{ item.question }}<span class="accordion-icon">+</span></button>
+        <div class="accordion-panel">{{ item.answer | md | safe }}</div>
       </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Τηρείται απόλυτη εχεμύθεια;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>Ναι. Ό,τι συζητείται καλύπτεται από απόλυτη επαγγελματική εχεμύθεια, σύμφωνα με τον Κώδικα Δεοντολογίας Ψυχολόγων (άρθρο 4) και το άρθρο 371 του Ποινικού Κώδικα. Περισσότερα στις <a href="/plirofories/" class="text-link">πρακτικές πληροφορίες</a>.</p></div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Γίνονται online συνεδρίες;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>{% if settings.practice.onlineSessions %}Ναι, μέσω ασφαλούς πλατφόρμας βιντεοκλήσης, για όσους δεν μπορούν να παρευρεθούν στο γραφείο. Δείτε τι χρειάζεται στις <a href="/plirofories/" class="text-link">πρακτικές πληροφορίες</a>.{% else %}Οι συνεδρίες γίνονται δια ζώσης στο γραφείο στον Άλιμο.{% endif %}</p></div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Πώς μπορώ να κλείσω ραντεβού;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>Κλείστε <a href="/rantevou/" class="text-link">online ραντεβού</a> επιλέγοντας ημέρα και ώρα, συμπληρώστε τη <a href="/contact/" class="text-link">φόρμα επικοινωνίας</a> ή καλέστε στο <a href="{{ settings.phone | telHref }}" class="text-link">{{ settings.phone }}</a>.</p></div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Πόσο κοστίζει μια συνεδρία;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>Οι αμοιβές και ο τρόπος πληρωμής αναφέρονται στις <a href="/plirofories/" class="text-link">πρακτικές πληροφορίες</a>. Για κάθε συνεδρία εκδίδεται νόμιμη απόδειξη.</p></div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Τι γίνεται αν χρειαστεί να ακυρώσω;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>{{ settings.practice.cancellationPolicy }}</p></div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Τι γίνεται με τα προσωπικά μου δεδομένα;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>Η ιστοσελίδα δεν χρησιμοποιεί cookies ούτε εργαλεία παρακολούθησης. Τα στοιχεία της κράτησης χρησιμοποιούνται μόνο για το ραντεβού σας. Δείτε την <a href="/politiki-aporritou/" class="text-link">Πολιτική Απορρήτου</a>.</p></div>
-      </div>
-      <div class="accordion-item">
-        <button class="accordion-trigger" aria-expanded="false">Τι κάνω αν βρίσκομαι σε κρίση;<span class="accordion-icon">+</span></button>
-        <div class="accordion-panel"><p>Η online κράτηση και το email δεν παρακολουθούνται σε πραγματικό χρόνο. Καλέστε το <a href="tel:112" class="text-link">112</a>, το <a href="tel:1018" class="text-link">1018</a> (Γραμμή για την Αυτοκτονία, 24ωρη) ή δείτε την <a href="/amesi-voitheia/" class="text-link">άμεση βοήθεια</a>.</p></div>
-      </div>
+      {%- endfor %}
     </div>
   </div>
 </section>

@@ -1,4 +1,4 @@
-{%- set pageTitle = (title + " | " + site.name) if title else site.title -%}
+{%- set pageTitle = (title + " | " + site.titleSuffix) if title else site.title -%}
 {%- set pageDescription = description or site.description -%}
 {%- set pageUrl = site.url + page.url -%}
 {%- set pageImage = site.url + (image or site.defaultImage) -%}
@@ -12,6 +12,12 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://api.web3forms.com; frame-src https://calendar.google.com; form-action 'self' https://api.web3forms.com; base-uri 'self'; object-src 'none'">
 {%- endif %}
 <meta name="referrer" content="strict-origin-when-cross-origin">
+{%- if settings.seo.googleSiteVerification %}
+<meta name="google-site-verification" content="{{ settings.seo.googleSiteVerification }}">
+{%- endif %}
+{%- if settings.seo.bingSiteVerification %}
+<meta name="msvalidate.01" content="{{ settings.seo.bingSiteVerification }}">
+{%- endif %}
 <title>{{ pageTitle }}</title>
 <meta name="description" content="{{ pageDescription }}">
 {%- if noindex %}
@@ -28,6 +34,11 @@
 <meta property="og:description" content="{{ pageDescription }}">
 <meta property="og:url" content="{{ pageUrl }}">
 <meta property="og:image" content="{{ pageImage }}">
+{%- if not image %}
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+{%- endif %}
+<meta property="og:image:alt" content="{{ imageAlt or (title or site.title) }}">
 {%- if ogType == 'article' %}
 <meta property="article:published_time" content="{{ date | dateIso }}">
 {%- endif %}
@@ -39,9 +50,7 @@
 <link rel="preload" href="/assets/fonts/Manrope-normal-greek.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/fonts.css">
 <link rel="stylesheet" href="/assets/css/styles.css">
-{%- if page.url == "/" %}
 {% include "partials/structured-data.njk" %}
-{%- endif %}
 </head>
 <body>
 <a href="#main" class="skip-link">Μετάβαση στο περιεχόμενο</a>

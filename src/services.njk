@@ -1,19 +1,34 @@
 ---
 layout: layouts/base.njk
-title: Υπηρεσίες
-description: Ατομική θεραπεία ενηλίκων, θεραπεία ζεύγους, Γνωσιακή Συμπεριφορική Θεραπεία, ψυχοδιαγνωστική αξιολόγηση, MBCT και online συνεδρίες στον Άλιμο.
+title: Ψυχολογικές υπηρεσίες στον Άλιμο
+description: Ψυχοθεραπεία ενηλίκων στον Άλιμο — άγχος, κατάθλιψη, πένθος, υπογονιμότητα, εγκυμοσύνη, χρόνια νοσήματα, θεραπεία ζεύγους και συμβουλευτική γονέων, με Γνωσιακή Συμπεριφορική Θεραπεία.
 permalink: /services/
+breadcrumb: Υπηρεσίες
 ---
 <section class="page-hero">
   <div class="container">
     <p class="eyebrow">Πώς μπορώ να βοηθήσω</p>
-    <h1>Υπηρεσίες</h1>
-    <p class="page-hero-sub">Θεραπεία προσαρμοσμένη σε εσάς — δια ζώσης στον Άλιμο ή online.</p>
+    <h1>Ψυχολογικές Υπηρεσίες</h1>
+    <p class="page-hero-sub">Θεραπεία προσαρμοσμένη σε εσάς — στο γραφείο στον Άλιμο{% if settings.practice.onlineSessions %} ή online{% endif %}.</p>
+  </div>
+</section>
+
+<section class="areas-section">
+  <div class="container narrow">
+    <p class="areas-intro">{{ areas.intro }}</p>
+    <h2>Τομείς που καλύπτω</h2>
+    <ul class="areas-list">
+      {%- for area in areas.list %}
+      <li>{{ area }}</li>
+      {%- endfor %}
+    </ul>
   </div>
 </section>
 
 <section class="services">
   <div class="container">
+    <h2 class="center">Θεραπευτικές προσεγγίσεις</h2>
+    {% include "partials/ornament.njk" %}
     <div class="services-grid">
       {%- for service in services.list %}
       {% include "partials/service-card.njk" %}

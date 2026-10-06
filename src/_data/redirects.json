@@ -1,0 +1,8 @@
+[
+  { "from": "/βιογραφικό/", "to": "/about/" },
+  { "from": "/θεραπεία/", "to": "/services/" },
+  { "from": "/κλείσε-ραντεβού/", "to": "/rantevou/" },
+  { "from": "/επικοινωνία/", "to": "/contact/" },
+  { "from": "/arthra/", "to": "/blog/" },
+  { "from": "/resumebutton/", "to": "/about/" }
+]

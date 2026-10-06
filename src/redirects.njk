@@ -1,0 +1,23 @@
+---
+pagination:
+  data: redirects
+  size: 1
+  alias: redirect
+permalink: "{{ redirect.from }}"
+eleventyExcludeFromCollections: true
+---
+{#- Ανακατευθύνσεις από τα παλιά URL του leniavlassi.com (Wix), ώστε τα παλιά links και
+    η κατάταξη στο Google να μεταφερθούν στις νέες σελίδες όταν αλλάξει το domain.
+    Το GitHub Pages δεν υποστηρίζει 301· το Google αντιμετωπίζει το άμεσο meta refresh ως μόνιμη ανακατεύθυνση. -#}
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<title>Μεταφορά…</title>
+<link rel="canonical" href="{{ site.url }}{{ redirect.to }}">
+<meta http-equiv="refresh" content="0; url={{ site.url }}{{ redirect.to }}">
+</head>
+<body>
+<p>Η σελίδα μεταφέρθηκε: <a href="{{ site.url }}{{ redirect.to }}">{{ site.url }}{{ redirect.to }}</a></p>
+</body>
+</html>
